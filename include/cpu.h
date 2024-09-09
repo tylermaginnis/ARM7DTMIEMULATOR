@@ -29,6 +29,16 @@ enum class Condition {
     AL  // Always
 };
 
+enum class Mode {
+    USER,
+    FIQ,
+    IRQ,
+    SUPERVISOR,
+    ABORT,
+    UNDEFINED,
+    SYSTEM
+};
+
 class CPU {
 public:
     void setRegister(uint32_t reg, uint32_t value);
@@ -43,11 +53,35 @@ public:
     void setCPSRFlags(uint32_t value);
     void setSPSRControl(uint32_t value);
     void setSPSRFlags(uint32_t value);
+    void switchMode(Mode mode);
 
 private:
-    uint32_t registers[16]; // Assuming 16 general-purpose registers
-    uint32_t spsr;
-    uint32_t cpsr;
+    uint32_t registers[16]; // R0-R15
+    uint32_t cpsr;          // Current Program Status Register
+    uint32_t spsr;          // Saved Program Status Register
+
+    // Banked registers
+    uint32_t banked_r8_fiq;
+    uint32_t banked_r9_fiq;
+    uint32_t banked_r10_fiq;
+    uint32_t banked_r11_fiq;
+    uint32_t banked_r12_fiq;
+    uint32_t banked_r13_fiq;
+    uint32_t banked_r14_fiq;
+
+    uint32_t banked_r13_irq;
+    uint32_t banked_r14_irq;
+
+    uint32_t banked_r13_svc;
+    uint32_t banked_r14_svc;
+
+    uint32_t banked_r13_abt;
+    uint32_t banked_r14_abt;
+
+    uint32_t banked_r13_und;
+    uint32_t banked_r14_und;
+
+    Mode currentMode;
 };
 
 #endif // CPU_H

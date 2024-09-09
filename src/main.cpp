@@ -8,6 +8,7 @@ void testMVN();
 void testMRS();
 void testMSR();
 void testMSRImmediate();
+void testSwitchMode();
 
 int main(int argc, char* argv[]) {
     if (argc > 1) {
@@ -22,6 +23,8 @@ int main(int argc, char* argv[]) {
             testMSR(); 
             std::cout << "-----------------------------------------" << std::endl;
             testMSRImmediate();
+            std::cout << "-----------------------------------------" << std::endl;
+            testSwitchMode();
             std::cout << "-----------------------------------------" << std::endl;
             // Add calls to other test functions here
             return 0;
@@ -159,5 +162,22 @@ void testMSRImmediate() {
         std::cout << "MSR SPSR immediate instruction test passed." << std::endl;
     } else {
         std::cout << "MSR SPSR immediate instruction test failed." << std::endl;
+    }
+}
+
+void testSwitchMode() {
+    CPU cpu;
+    cpu.setRegister(13, 0x1000); // Set SP in USER mode
+    cpu.setRegister(14, 0x2000); // Set LR in USER mode
+
+    cpu.switchMode(Mode::FIQ);
+    cpu.setRegister(13, 0x3000); // Set SP in FIQ mode
+    cpu.setRegister(14, 0x4000); // Set LR in FIQ mode
+
+    cpu.switchMode(Mode::USER);
+    if (cpu.getRegister(13) == 0x1000 && cpu.getRegister(14) == 0x2000) {
+        std::cout << "Switch to USER mode test passed." << std::endl;
+    } else {
+        std::cout << "Switch to USER mode test failed." << std::endl;
     }
 }

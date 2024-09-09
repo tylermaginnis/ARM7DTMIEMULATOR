@@ -3,11 +3,60 @@
 #include <string>
 
 void CPU::setRegister(uint32_t reg, uint32_t value) {
-    registers[reg] = value;
+    if (reg < 16) {
+        if (reg == 13) { // SP
+            switch (currentMode) {
+                case Mode::FIQ: banked_r13_fiq = value; break;
+                case Mode::IRQ: banked_r13_irq = value; break;
+                case Mode::SUPERVISOR: banked_r13_svc = value; break;
+                case Mode::ABORT: banked_r13_abt = value; break;
+                case Mode::UNDEFINED: banked_r13_und = value; break;
+                default: registers[13] = value; break;
+            }
+        } else if (reg == 14) { // LR
+            switch (currentMode) {
+                case Mode::FIQ: banked_r14_fiq = value; break;
+                case Mode::IRQ: banked_r14_irq = value; break;
+                case Mode::SUPERVISOR: banked_r14_svc = value; break;
+                case Mode::ABORT: banked_r14_abt = value; break;
+                case Mode::UNDEFINED: banked_r14_und = value; break;
+                default: registers[14] = value; break;
+            }
+        } else if (reg == 15) { // PC
+            registers[15] = value & 0xFFFFFFFC; // Mask bits [1:0]
+        } else {
+            registers[reg] = value;
+        }
+    }
 }
 
 uint32_t CPU::getRegister(uint32_t reg) {
-    return registers[reg];
+    if (reg < 16) {
+        if (reg == 13) { // SP
+            switch (currentMode) {
+                case Mode::FIQ: return banked_r13_fiq;
+                case Mode::IRQ: return banked_r13_irq;
+                case Mode::SUPERVISOR: return banked_r13_svc;
+                case Mode::ABORT: return banked_r13_abt;
+                case Mode::UNDEFINED: return banked_r13_und;
+                default: return registers[13];
+            }
+        } else if (reg == 14) { // LR
+            switch (currentMode) {
+                case Mode::FIQ: return banked_r14_fiq;
+                case Mode::IRQ: return banked_r14_irq;
+                case Mode::SUPERVISOR: return banked_r14_svc;
+                case Mode::ABORT: return banked_r14_abt;
+                case Mode::UNDEFINED: return banked_r14_und;
+                default: return registers[14];
+            }
+        } else if (reg == 15) { // PC
+            return registers[15] & 0xFFFFFFFC; // Mask bits [1:0]
+        } else {
+            return registers[reg];
+        }
+    }
+    return 0;
 }
 
 bool CPU::checkCondition(Condition cond) {
@@ -63,10 +112,7 @@ void CPU::setCPSR(Field field, uint32_t value) {
             cpsr = (cpsr & 0x0FFFFFFF) | (value & 0xF0000000); // Update only the flag bits
             break;
         case Field::CPSR:
-            cpsr = (cpsr & 0xFFFFFF00) | (value & 0xFF); // Update control bits
-            cpsr = (cpsr & 0xFFFF00FF) | (value & 0xFF00); // Update extension bits
-            cpsr = (cpsr & 0xFF00FFFF) | (value & 0xFF0000); // Update status bits
-            cpsr = (cpsr & 0x0FFFFFFF) | (value & 0xF0000000); // Update flag bits
+            cpsr = value; // Update all bits
             break;
         default:
             break;
@@ -84,10 +130,7 @@ void CPU::setSPSR(Field field, uint32_t value) {
             spsr = (spsr & 0x0FFFFFFF) | (value & 0xF0000000); // Update only the flag bits
             break;
         case Field::SPSR:
-            spsr = (spsr & 0xFFFFFF00) | (value & 0xFF); // Update control bits
-            spsr = (spsr & 0xFFFF00FF) | (value & 0xFF00); // Update extension bits
-            spsr = (spsr & 0xFF00FFFF) | (value & 0xFF0000); // Update status bits
-            spsr = (spsr & 0x0FFFFFFF) | (value & 0xF0000000); // Update flag bits
+            spsr = value; // Update all bits
             break;
         default:
             break;
@@ -105,7 +148,6 @@ uint32_t CPU::getCPSR() {
     return cpsr; // Return the stored CPSR value
 }
 
-
 void CPU::setCPSRControl(uint32_t value) {
     cpsr = (cpsr & 0xFFFFFF00) | (value & 0xFF); // Update only the control bits
 }
@@ -120,4 +162,71 @@ void CPU::setSPSRControl(uint32_t value) {
 
 void CPU::setSPSRFlags(uint32_t value) {
     spsr = (spsr & 0x0FFFFFFF) | (value & 0xF0000000); // Update only the flag bits
+}
+
+void CPU::switchMode(Mode mode) {
+    // Save current mode's banked registers
+    switch (currentMode) {
+        case Mode::FIQ:
+            banked_r8_fiq = registers[8];
+            banked_r9_fiq = registers[9];
+            banked_r10_fiq = registers[10];
+            banked_r11_fiq = registers[11];
+            banked_r12_fiq = registers[12];
+            banked_r13_fiq = registers[13];
+            banked_r14_fiq = registers[14];
+            break;
+        case Mode::IRQ:
+            banked_r13_irq = registers[13];
+            banked_r14_irq = registers[14];
+            break;
+        case Mode::SUPERVISOR:
+            banked_r13_svc = registers[13];
+            banked_r14_svc = registers[14];
+            break;
+        case Mode::ABORT:
+            banked_r13_abt = registers[13];
+            banked_r14_abt = registers[14];
+            break;
+        case Mode::UNDEFINED:
+            banked_r13_und = registers[13];
+            banked_r14_und = registers[14];
+            break;
+        default:
+            break;
+    }
+
+    // Switch mode
+    currentMode = mode;
+
+    // Restore new mode's banked registers
+    switch (currentMode) {
+        case Mode::FIQ:
+            registers[8] = banked_r8_fiq;
+            registers[9] = banked_r9_fiq;
+            registers[10] = banked_r10_fiq;
+            registers[11] = banked_r11_fiq;
+            registers[12] = banked_r12_fiq;
+            registers[13] = banked_r13_fiq;
+            registers[14] = banked_r14_fiq;
+            break;
+        case Mode::IRQ:
+            registers[13] = banked_r13_irq;
+            registers[14] = banked_r14_irq;
+            break;
+        case Mode::SUPERVISOR:
+            registers[13] = banked_r13_svc;
+            registers[14] = banked_r14_svc;
+            break;
+        case Mode::ABORT:
+            registers[13] = banked_r13_abt;
+            registers[14] = banked_r14_abt;
+            break;
+        case Mode::UNDEFINED:
+            registers[13] = banked_r13_und;
+            registers[14] = banked_r14_und;
+            break;
+        default:
+            break;
+    }
 }

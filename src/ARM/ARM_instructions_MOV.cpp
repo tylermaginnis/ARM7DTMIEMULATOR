@@ -9,17 +9,29 @@ void executeMOV(CPU& cpu, uint32_t instruction) {
     uint32_t Rd = (instruction >> 12) & 0xF;
     uint32_t Oprnd2 = instruction & 0xFFF;
 
+    // Debug prints
+    std::cout << "Instruction: " << std::hex << instruction << std::endl;
+    std::cout << "Condition: " << cond << std::endl;
+    std::cout << "S bit: " << S << std::endl;
+    std::cout << "Rd: " << Rd << std::endl;
+    std::cout << "Oprnd2: " << Oprnd2 << std::endl;
+
     // Check condition
     if (!cpu.checkCondition(static_cast<Condition>(cond))) {
+        std::cout << "Condition failed, do not execute" << std::endl;
         return;
     }
 
     // Execute MOV
     cpu.setRegister(Rd, Oprnd2);
 
+    // Debug print
+    std::cout << "Register " << Rd << " set to " << Oprnd2 << std::endl;
+
     // Update flags if S bit is set
     if (S) {
         cpu.updateFlags(Oprnd2);
+        std::cout << "Flags updated with " << Oprnd2 << std::endl;
     }
 }
 
@@ -55,10 +67,17 @@ void executeMVN(CPU& cpu, uint32_t instruction) {
         cpu.updateFlags(result);
     }
 }
+
 void executeMRS(CPU& cpu, uint32_t instruction) {
     uint32_t cond = (instruction >> 28) & 0xF;
     uint32_t Rd = (instruction >> 12) & 0xF;
     uint32_t psr = (instruction >> 22) & 0x1; // 0 for CPSR, 1 for SPSR
+
+    // Debug prints
+    std::cout << "Instruction: " << std::hex << instruction << std::endl;
+    std::cout << "Condition: " << cond << std::endl;
+    std::cout << "Rd: " << Rd << std::endl;
+    std::cout << "PSR: " << psr << std::endl;
 
     if (!cpu.checkCondition(static_cast<Condition>(cond))) {
         std::cout << "Condition failed, do not execute" << std::endl;
@@ -67,13 +86,23 @@ void executeMRS(CPU& cpu, uint32_t instruction) {
 
     uint32_t value = (psr == 0) ? cpu.getCPSR() : cpu.getSPSR();
     cpu.setRegister(Rd, value);
+
+    // Debug print
+    std::cout << "Register " << Rd << " set to " << std::hex << value << std::endl;
 }
 
 void executeMSR(CPU& cpu, uint32_t instruction) {
     uint32_t cond = (instruction >> 28) & 0xF;
     uint32_t fieldMask = (instruction >> 16) & 0xF;
     uint32_t psr = (instruction >> 22) & 0x1; // 0 for CPSR, 1 for SPSR
-    uint32_t Rm = instruction & 0xF;
+    uint32_t Rm = (instruction >> 0) & 0xF;
+
+    // Debug prints
+    std::cout << "Instruction: " << std::hex << instruction << std::endl;
+    std::cout << "Condition: " << cond << std::endl;
+    std::cout << "Field Mask: " << fieldMask << std::endl;
+    std::cout << "PSR: " << psr << std::endl;
+    std::cout << "Rm: " << Rm << std::endl;
 
     if (!cpu.checkCondition(static_cast<Condition>(cond))) {
         std::cout << "Condition failed, do not execute" << std::endl;
@@ -81,10 +110,11 @@ void executeMSR(CPU& cpu, uint32_t instruction) {
     }
 
     uint32_t value = cpu.getRegister(Rm);
+    std::cout << "Value from Rm: " << std::hex << value << std::endl;
 
     if (psr == 0) { // Update CPSR
         if (fieldMask & 0x1) { // Control field
-            cpu.setCPSR(Field::CONTROL, value & 0xFF);
+            cpu.setCPSR(Field::CONTROL, value);
         }
         if (fieldMask & 0x2) { // Extension field
             cpu.setCPSR(Field::CPSR, (cpu.getCPSR() & 0xFFFF00FF) | (value & 0xFF00));
@@ -93,11 +123,11 @@ void executeMSR(CPU& cpu, uint32_t instruction) {
             cpu.setCPSR(Field::CPSR, (cpu.getCPSR() & 0xFF00FFFF) | (value & 0xFF0000));
         }
         if (fieldMask & 0x8) { // Flags field
-            cpu.setCPSR(Field::FLAGS, value & 0xF0000000);
+            cpu.setCPSR(Field::FLAGS, value);
         }
     } else { // Update SPSR
         if (fieldMask & 0x1) { // Control field
-            cpu.setSPSR(Field::CONTROL, value & 0xFF);
+            cpu.setSPSR(Field::CONTROL, value);
         }
         if (fieldMask & 0x2) { // Extension field
             cpu.setSPSR(Field::SPSR, (cpu.getSPSR() & 0xFFFF00FF) | (value & 0xFF00));
@@ -106,9 +136,13 @@ void executeMSR(CPU& cpu, uint32_t instruction) {
             cpu.setSPSR(Field::SPSR, (cpu.getSPSR() & 0xFF00FFFF) | (value & 0xFF0000));
         }
         if (fieldMask & 0x8) { // Flags field
-            cpu.setSPSR(Field::FLAGS, value & 0xF0000000);
+            cpu.setSPSR(Field::FLAGS, value);
         }
     }
+
+    // Debug prints after update
+    std::cout << "Updated CPSR: " << std::hex << cpu.getCPSR() << std::endl;
+    std::cout << "Updated SPSR: " << std::hex << cpu.getSPSR() << std::endl;
 }
 
 void executeMSRImmediate(CPU& cpu, uint32_t instruction) {
