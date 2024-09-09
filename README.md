@@ -37,7 +37,7 @@ This project is an emulator for the ARM7TDMI processor, written in C++. It inclu
 
 4. Build the project:
     ```sh
-    make
+    cmake --build .
     ```
 
 ### Running the Emulator
