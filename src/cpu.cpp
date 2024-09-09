@@ -136,7 +136,7 @@ void CPU::setCPSR(uint32_t value, uint32_t fieldMask) {
     std::cout << "Current CPSR before update: " << std::hex << cpsr << std::endl;
 
     if (fieldMask == 0xFFFFFFFF) {
-        cpsr = value;
+        cpsr = value; // Update all bits if fieldMask is all ones
     } else {
         if (fieldMask & 0x1) { // Control field
             cpsr = (cpsr & ~0xFF) | (value & 0xFF);
@@ -151,7 +151,6 @@ void CPU::setCPSR(uint32_t value, uint32_t fieldMask) {
             cpsr = (cpsr & ~0xF0000000) | (value & 0xF0000000);
         }
     }
-
     std::cout << "Set CPSR: " << std::hex << cpsr << std::endl;
 }
 
@@ -160,7 +159,7 @@ void CPU::setSPSR(uint32_t value, uint32_t fieldMask) {
     std::cout << "Current SPSR before update: " << std::hex << spsr << std::endl;
 
     if (fieldMask == 0xFFFFFFFF) {
-        spsr = value;
+        spsr = value; // Update all bits if fieldMask is all ones
     } else {
         if (fieldMask & 0x1) { // Control field
             spsr = (spsr & ~0xFF) | (value & 0xFF);
@@ -175,21 +174,34 @@ void CPU::setSPSR(uint32_t value, uint32_t fieldMask) {
             spsr = (spsr & ~0xF0000000) | (value & 0xF0000000);
         }
     }
-
     std::cout << "Set SPSR: " << std::hex << spsr << std::endl;
 }
 
 void CPU::handleImmediateValue(uint32_t& registerValue, uint32_t immediateValue, uint32_t fieldMask, bool isCPSR) {
     std::cout << "handleImmediateValue called with immediateValue: " << std::hex << immediateValue << ", fieldMask: " << fieldMask << ", isCPSR: " << isCPSR << std::endl;
-    uint32_t rotateAmount = (immediateValue >> 8) & 0xF; // Extract rotate amount from immediate value
-    uint32_t rotatedValue = (immediateValue << rotateAmount) | (immediateValue >> (32 - rotateAmount));
+
+    std::cout << "Immediate value: " << std::hex << immediateValue << std::endl;
+    uint32_t rotatedValue = immediateValue;
     std::cout << "Rotated value: " << std::hex << rotatedValue << std::endl;
-    if (isCPSR) {
-        setCPSR(rotatedValue, fieldMask);
+
+    if (fieldMask == 0xFFFFFFFF) {
+        registerValue = rotatedValue;
     } else {
-        setSPSR(rotatedValue, fieldMask);
+        if (fieldMask & 0x1) { // Control field
+            registerValue = (registerValue & ~0xFF) | (rotatedValue & 0xFF);
+        }
+        if (fieldMask & 0x2) { // Extension field
+            registerValue = (registerValue & ~0xFF00) | (rotatedValue & 0xFF00);
+        }
+        if (fieldMask & 0x4) { // Status field
+            registerValue = (registerValue & ~0xFF0000) | (rotatedValue & 0xFF0000);
+        }
+        if (fieldMask & 0x8) { // Flags field
+            registerValue = (registerValue & ~0xF0000000) | ((rotatedValue << 28) & 0xF0000000);
+        }
     }
 }
+
 
 uint32_t CPU::getSPSR() {
     std::cout << "getSPSR called" << std::endl;

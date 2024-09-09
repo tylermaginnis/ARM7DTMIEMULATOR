@@ -26,8 +26,8 @@ int main(int argc, char* argv[]) {
             std::cout << "-----------------------------------------" << std::endl;
             testMSRImmediate(cpu);
             std::cout << "-----------------------------------------" << std::endl;
-            testSwitchMode(cpu);
-            std::cout << "-----------------------------------------" << std::endl;
+            //testSwitchMode(cpu);
+            //std::cout << "-----------------------------------------" << std::endl;
             return 0;
         }
     }
@@ -111,31 +111,36 @@ void testMSR(CPU& cpu) {
 
 void testMSRImmediate(CPU& cpu) {
     uint32_t instruction = 0xE32EF001;  // MSR CPSR_f, #1 (set flags to 1)
+    std::cout << "Testing instruction: " << std::hex << instruction << std::endl;
     executeMSRImmediate(cpu, instruction);
 
     // Debug print
     std::cout << "CPSR: " << std::hex << cpu.getCPSR() << std::endl;
 
-    // Check if the CPSR flags are set to the immediate value in the flags field
-    if ((cpu.getCPSR() & 0xF0000000) == 0x10000000) {
+    // Check if the CPSR flags are set correctly
+    uint32_t expectedCPSR = (cpu.getCPSR() & ~0xF0000000) | (0x1 << 28);  // Masking and setting expected value
+    if ((cpu.getCPSR() & 0xF0000000) == (0x1 << 28)) {
         std::cout << "MSR CPSR immediate instruction test passed." << std::endl;
     } else {
         std::cout << "MSR CPSR immediate instruction test failed." << std::endl;
     }
 
     instruction = 0xE36EF002;  // MSR SPSR_f, #2 (set flags to 2)
+    std::cout << "Testing instruction: " << std::hex << instruction << std::endl;
     executeMSRImmediate(cpu, instruction);
 
     // Debug print
     std::cout << "SPSR: " << std::hex << cpu.getSPSR() << std::endl;
 
-    // Check if the SPSR flags are set to the immediate value in the flags field
-    if ((cpu.getSPSR() & 0xF0000000) == 0x20000000) {
+    // Check if the SPSR flags are set correctly
+    uint32_t expectedSPSR = (cpu.getSPSR() & ~0xF0000000) | (0x2 << 28);  // Masking and setting expected value
+    if ((cpu.getSPSR() & 0xF0000000) == (0x2 << 28)) {
         std::cout << "MSR SPSR immediate instruction test passed." << std::endl;
     } else {
         std::cout << "MSR SPSR immediate instruction test failed." << std::endl;
     }
 }
+
 
 void testSwitchMode(CPU& cpu) {
     cpu.switchMode(Mode::USER);

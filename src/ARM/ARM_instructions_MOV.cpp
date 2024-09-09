@@ -143,7 +143,8 @@ void executeMSRImmediate(CPU& cpu, uint32_t instruction) {
     uint32_t rotate = (instruction >> 8) & 0xF;      // Rotate right by 2 * rotate
 
     // Rotate immediate value to the right by 2 * rotate
-    uint32_t value = (imm >> (rotate * 2)) | (imm << (32 - (rotate * 2)));
+    uint32_t rotateAmount = (rotate * 2) % 32;
+    uint32_t value = (imm >> rotateAmount) | (imm << (32 - rotateAmount));
     value &= 0xFFFFFFFF;  // Ensure value is 32-bit
 
     // Debug prints
@@ -161,10 +162,22 @@ void executeMSRImmediate(CPU& cpu, uint32_t instruction) {
         return;  // Condition failed, do not execute
     }
 
+    // Debug prints before update
+    std::cout << "Before update - CPSR: " << std::hex << cpu.getCPSR() << std::endl;
+    std::cout << "Before update - SPSR: " << std::hex << cpu.getSPSR() << std::endl;
+
     // Update the appropriate PSR (CPSR or SPSR) based on the field mask
     if (psr == 0) {  // Update CPSR
-        cpu.setCPSR(value, fieldMask);
+        uint32_t cpsr = cpu.getCPSR();
+        cpu.handleImmediateValue(cpsr, value, fieldMask, true);
+        cpu.setCPSR(cpsr, fieldMask); // Call setCPSR only once
     } else {  // Update SPSR
-        cpu.setSPSR(value, fieldMask);
+        uint32_t spsr = cpu.getSPSR();
+        cpu.handleImmediateValue(spsr, value, fieldMask, false);
+        cpu.setSPSR(spsr, fieldMask); // Call setSPSR only once
     }
+
+    // Debug prints after update
+    std::cout << "After update - CPSR: " << std::hex << cpu.getCPSR() << std::endl;
+    std::cout << "After update - SPSR: " << std::hex << cpu.getSPSR() << std::endl;
 }
