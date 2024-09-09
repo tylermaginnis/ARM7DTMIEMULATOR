@@ -157,7 +157,3 @@ The following analysis is based on the output of the command-line interface (CLI
 - **Result**: Test passed
 
 Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions have passed successfully, indicating that the emulator is functioning correctly for these instructions.
-
-### Running the Emulator
-
-To run the emulator, execute the following command from the build directory:
