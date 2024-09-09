@@ -4,14 +4,16 @@
 #include "../include/ARM/arm_instructions_MOV.h"
 
 void testMOV();
-void testMVN(); // Add this line
+void testMVN(); 
+void testMRS();
 
 int main(int argc, char* argv[]) {
     if (argc > 1) {
         std::string arg = argv[1];
         if (arg == "test") {
             testMOV();
-            testMVN(); // Add this line
+            testMVN();
+            testMRS();
             // Add calls to other test functions here
             return 0;
         }
@@ -46,5 +48,20 @@ void testMVN() {
         std::cout << "MVN instruction test passed." << std::endl;
     } else {
         std::cout << "MVN instruction test failed." << std::endl;
+    }
+}
+
+void testMRS() {
+    CPU cpu;
+    cpu.setSPSR(Field::SPSR, 0x12345678); // Set some value in SPSR
+    cpu.setCPSR(Field::SPSR, 0x87654321); // Set some value in CPSR
+    uint32_t instruction = 0xE10F0000; // Example MRS instruction: MRS R0, CPSR
+    executeMRS(cpu, instruction);
+
+    // Check if the register R0 is set to the CPSR value
+    if (cpu.getRegister(0) == 0x87654321) {
+        std::cout << "MRS instruction test passed." << std::endl;
+    } else {
+        std::cout << "MRS instruction test failed." << std::endl;
     }
 }

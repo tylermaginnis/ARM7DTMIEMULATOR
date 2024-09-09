@@ -5,5 +5,7 @@
 
 void executeMOV(class CPU& cpu, uint32_t instruction);
 void executeMVN(class CPU& cpu, uint32_t instruction);
+void executeMRS(class CPU& cpu, uint32_t instruction);
+
 
 #endif // ARM_INSTRUCTIONS_MOV_H

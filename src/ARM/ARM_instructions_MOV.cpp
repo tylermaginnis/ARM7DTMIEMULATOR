@@ -42,3 +42,19 @@ void executeMVN(CPU& cpu, uint32_t instruction) {
         cpu.updateFlags(result);
     }
 }
+
+void executeMRS(CPU& cpu, uint32_t instruction) {
+    // Extract condition, Rd, and PSR field from the instruction
+    uint32_t cond = (instruction >> 28) & 0xF;
+    uint32_t Rd = (instruction >> 12) & 0xF;
+    uint32_t psr = (instruction >> 22) & 0x1; // 0 for CPSR, 1 for SPSR
+
+    // Check condition
+    if (!cpu.checkCondition(static_cast<Condition>(cond))) {
+        return;
+    }
+
+    // Execute MRS
+    uint32_t value = (psr == 0) ? cpu.getCPSR() : cpu.getSPSR();
+    cpu.setRegister(Rd, value);
+}

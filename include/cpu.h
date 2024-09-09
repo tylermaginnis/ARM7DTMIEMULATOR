@@ -5,7 +5,7 @@
 #include "ARM/arm_instructions_MOV.h"
 
 enum class Field {
-    // Define the fields here
+    SPSR
 };
 
 enum class Condition {
@@ -25,6 +25,8 @@ public:
 
 private:
     uint32_t registers[16]; // Assuming 16 general-purpose registers
+    uint32_t spsr;
+    uint32_t cpsr;
 };
 
 #endif // CPU_H
