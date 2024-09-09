@@ -7,15 +7,22 @@ void testMOV();
 void testMVN(); 
 void testMRS();
 void testMSR();
+void testMSRImmediate();
 
 int main(int argc, char* argv[]) {
     if (argc > 1) {
         std::string arg = argv[1];
         if (arg == "test") {
             testMOV();
+            std::cout << "-----------------------------------------" << std::endl;
             testMVN();
+            std::cout << "-----------------------------------------" << std::endl;
             testMRS();
-            testMSR(); // Add this line
+            std::cout << "-----------------------------------------" << std::endl;
+            testMSR(); 
+            std::cout << "-----------------------------------------" << std::endl;
+            testMSRImmediate();
+            std::cout << "-----------------------------------------" << std::endl;
             // Add calls to other test functions here
             return 0;
         }
@@ -56,28 +63,101 @@ void testMVN() {
 void testMRS() {
     CPU cpu;
     cpu.setSPSR(Field::SPSR, 0x12345678); // Set some value in SPSR
-    cpu.setCPSR(Field::SPSR, 0x87654321); // Set some value in CPSR
+    cpu.setCPSR(Field::CPSR, 0x87654321); // Set some value in CPSR
     uint32_t instruction = 0xE10F0000; // Example MRS instruction: MRS R0, CPSR
     executeMRS(cpu, instruction);
 
     // Check if the register R0 is set to the CPSR value
     if (cpu.getRegister(0) == 0x87654321) {
-        std::cout << "MRS instruction test passed." << std::endl;
+        std::cout << "MRS CPSR instruction test passed." << std::endl;
     } else {
-        std::cout << "MRS instruction test failed." << std::endl;
+        std::cout << "MRS CPSR instruction test failed." << std::endl;
+    }
+
+    instruction = 0xE14F0000; // Example MRS instruction: MRS R0, SPSR
+    executeMRS(cpu, instruction);
+
+    // Check if the register R0 is set to the SPSR value
+    if (cpu.getRegister(0) == 0x12345678) {
+        std::cout << "MRS SPSR instruction test passed." << std::endl;
+    } else {
+        std::cout << "MRS SPSR instruction test failed." << std::endl;
     }
 }
 
 void testMSR() {
     CPU cpu;
     cpu.setRegister(1, 0x87654321); // Set some value in R1
-    uint32_t instruction = 0xE129F001; // Example MSR instruction: MSR SPSR, R1
+    uint32_t instruction = 0xE129F001; // Example MSR instruction: MSR CPSR, R1
     executeMSR(cpu, instruction);
 
-    // Check if the SPSR is set to the value in R1
-    if (cpu.getSPSR() == 0x87654321) {
-        std::cout << "MSR instruction test passed." << std::endl;
+    // Check if the CPSR is set to the value in R1
+    if (cpu.getCPSR() == 0x87654321) {
+        std::cout << "MSR CPSR instruction test passed." << std::endl;
     } else {
-        std::cout << "MSR instruction test failed." << std::endl;
+        std::cout << "MSR CPSR instruction test failed." << std::endl;
+    }
+
+    cpu.setRegister(2, 0x12345678); // Set some value in R2
+    instruction = 0xE169F002; // Example MSR instruction: MSR SPSR, R2
+    executeMSR(cpu, instruction);
+
+    // Check if the SPSR is set to the value in R2
+    if (cpu.getSPSR() == 0x12345678) {
+        std::cout << "MSR SPSR instruction test passed." << std::endl;
+    } else {
+        std::cout << "MSR SPSR instruction test failed." << std::endl;
+    }
+
+    // Additional test cases for MSR instruction
+    cpu.setRegister(3, 0xFFFFFFFF); // Set some value in R3
+    instruction = 0xE129F003; // Example MSR instruction: MSR CPSR, R3
+    executeMSR(cpu, instruction);
+
+    // Check if the CPSR is set to the value in R3
+    if (cpu.getCPSR() == 0xFFFFFFFF) {
+        std::cout << "MSR CPSR instruction test passed." << std::endl;
+    } else {
+        std::cout << "MSR CPSR instruction test failed." << std::endl;
+    }
+
+    cpu.setRegister(4, 0x00000000); // Set some value in R4
+    instruction = 0xE169F004; // Example MSR instruction: MSR SPSR, R4
+    executeMSR(cpu, instruction);
+
+    // Check if the SPSR is set to the value in R4
+    if (cpu.getSPSR() == 0x00000000) {
+        std::cout << "MSR SPSR instruction test passed." << std::endl;
+    } else {
+        std::cout << "MSR SPSR instruction test failed." << std::endl;
+    }
+}
+
+void testMSRImmediate() {
+    CPU cpu;
+    uint32_t instruction = 0xE32EF001;  // MSR CPSR_f, #1 (set flags to 1)
+    executeMSRImmediate(cpu, instruction);
+
+    // Debug print
+    std::cout << "CPSR: " << std::hex << cpu.getCPSR() << std::endl;
+
+    // Check if the CPSR flags are set to the immediate value in the flags field
+    if ((cpu.getCPSR() & 0xF0000000) == 0x10000000) {
+        std::cout << "MSR CPSR immediate instruction test passed." << std::endl;
+    } else {
+        std::cout << "MSR CPSR immediate instruction test failed." << std::endl;
+    }
+
+    instruction = 0xE36EF002;  // MSR SPSR_f, #2 (set flags to 2)
+    executeMSRImmediate(cpu, instruction);
+
+    // Debug print
+    std::cout << "SPSR: " << std::hex << cpu.getSPSR() << std::endl;
+
+    // Check if the SPSR flags are set to the immediate value in the flags field
+    if ((cpu.getSPSR() & 0xF0000000) == 0x20000000) {
+        std::cout << "MSR SPSR immediate instruction test passed." << std::endl;
+    } else {
+        std::cout << "MSR SPSR immediate instruction test failed." << std::endl;
     }
 }
