@@ -6,6 +6,7 @@
 void testMOV();
 void testMVN(); 
 void testMRS();
+void testMSR();
 
 int main(int argc, char* argv[]) {
     if (argc > 1) {
@@ -14,6 +15,7 @@ int main(int argc, char* argv[]) {
             testMOV();
             testMVN();
             testMRS();
+            testMSR(); // Add this line
             // Add calls to other test functions here
             return 0;
         }
@@ -63,5 +65,19 @@ void testMRS() {
         std::cout << "MRS instruction test passed." << std::endl;
     } else {
         std::cout << "MRS instruction test failed." << std::endl;
+    }
+}
+
+void testMSR() {
+    CPU cpu;
+    cpu.setRegister(1, 0x87654321); // Set some value in R1
+    uint32_t instruction = 0xE129F001; // Example MSR instruction: MSR SPSR, R1
+    executeMSR(cpu, instruction);
+
+    // Check if the SPSR is set to the value in R1
+    if (cpu.getSPSR() == 0x87654321) {
+        std::cout << "MSR instruction test passed." << std::endl;
+    } else {
+        std::cout << "MSR instruction test failed." << std::endl;
     }
 }

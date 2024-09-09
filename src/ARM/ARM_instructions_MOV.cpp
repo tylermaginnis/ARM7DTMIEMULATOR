@@ -58,3 +58,24 @@ void executeMRS(CPU& cpu, uint32_t instruction) {
     uint32_t value = (psr == 0) ? cpu.getCPSR() : cpu.getSPSR();
     cpu.setRegister(Rd, value);
 }
+
+void executeMSR(CPU& cpu, uint32_t instruction) {
+    // Extract condition, field mask, and Rm from the instruction
+    uint32_t cond = (instruction >> 28) & 0xF;
+    uint32_t fieldMask = (instruction >> 16) & 0xF;
+    uint32_t Rm = instruction & 0xF;
+
+    // Check condition
+    if (!cpu.checkCondition(static_cast<Condition>(cond))) {
+        return;
+    }
+
+    // Get the value from the register Rm
+    uint32_t value = cpu.getRegister(Rm);
+
+    // Update the SPSR based on the field mask
+    if (fieldMask & 0x1) { // Control field
+        cpu.setSPSR(Field::SPSR, value);
+    }
+    // Add more field mask handling if needed
+}
