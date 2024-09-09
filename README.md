@@ -37,6 +37,21 @@ This project is an emulator for the ARM7TDMI processor, written in C++. It inclu
     cmake --build .
     ```
 
+5. To run the tests, use the following command:
+    ```sh
+    ./ARM7TDMI test
+    ```
+
+This will execute a series of predefined tests to ensure the emulator is functioning correctly.
+
+## Code Structure
+
+- `src/main.cpp`: Contains the main function and test functions.
+- `src/ARM/ARM_instructions_MOV.cpp`: Implements the MOV, MVN, MRS, MSR, and MSRImmediate instructions.
+- `src/cpu.cpp`: Implements the CPU class and its methods.
+- `include/ARM/arm_instructions_MOV.h`: Header file for ARM instruction implementations.
+- `include/cpu.h`: Header file for the CPU class.
+
 ### Running the Emulator
 
 To run the emulator, execute the following command from the build directory:
