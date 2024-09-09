@@ -5,9 +5,6 @@ This project is an emulator for the ARM7TDMI processor, written in C++. It inclu
 ## Features
 
 - Emulates ARM7TDMI processor
-- Supports MOV and MVN instructions
-- Simple CPU model with 16 general-purpose registers
-- Condition checking and flag updating
 
 ## Getting Started
 
