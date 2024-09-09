@@ -56,12 +56,12 @@ This will execute a series of predefined tests to ensure the emulator is functio
 
 | Test Case                | Description                                      | Result       |
 |--------------------------|--------------------------------------------------|--------------|
-| `testMOV`                | Tests the MOV instruction                        | ![#90EE90] Passed |
-| `testMVN`                | Tests the MVN instruction                        | ![#90EE90] Passed |
-| `testMRS`                | Tests the MRS instruction                        | ![#90EE90] Passed |
-| `testMSR`                | Tests the MSR instruction                        | ![#90EE90] Passed |
-| `testMSRImmediate`       | Tests the MSRImmediate instruction               | ![#FF0000] Failed |
-| `testSwitchMode`         | Tests switching between different CPU modes      | ![#FF0000] Failed |
+| `testMOV`                | Tests the MOV instruction                        | <span style="background-color: #90EE90;">Passed</span> |
+| `testMVN`                | Tests the MVN instruction                        | <span style="background-color: #90EE90;">Passed</span> |
+| `testMRS`                | Tests the MRS instruction                        | <span style="background-color: #90EE90;">Passed</span> |
+| `testMSR`                | Tests the MSR instruction                        | <span style="background-color: #90EE90;">Passed</span> |
+| `testMSRImmediate`       | Tests the MSRImmediate instruction               | <span style="background-color: #FF0000;">Failed</span> |
+| `testSwitchMode`         | Tests switching between different CPU modes      | <span style="background-color: #FF0000;">Failed</span> |
 
 
 ### Running the Emulator
