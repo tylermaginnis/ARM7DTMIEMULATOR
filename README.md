@@ -52,6 +52,16 @@ This will execute a series of predefined tests to ensure the emulator is functio
 - `include/ARM/arm_instructions_MOV.h`: Header file for ARM instruction implementations.
 - `include/cpu.h`: Header file for the CPU class.
 
+## Glossary of ARM7TDMI Terminology
+
+- **MOV**: Move - Transfers a value from one register to another or loads an immediate value into a register.
+- **MVN**: Move Not - Transfers the bitwise NOT of an immediate value or a register value into a destination register.
+- **MRS**: Move PSR to Register - Transfers the value of the CPSR or SPSR to a general-purpose register.
+- **MSR**: Move Register to PSR - Transfers a value from a general-purpose register to the CPSR or SPSR.
+- **MSRImmediate**: Move Immediate to PSR - Transfers an immediate value to the CPSR or SPSR.
+- **CPSR**: Current Program Status Register - Holds the current state of the processor, including condition flags, interrupt status, and processor mode.
+- **SPSR**: Saved Program Status Register - Holds the saved state of the CPSR when an exception occurs, allowing the processor to return to its previous state after handling the exception.
+
 ## Test Cases
 
 | Test Case                | Description                                      | Result       |
