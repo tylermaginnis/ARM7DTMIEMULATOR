@@ -52,6 +52,18 @@ This will execute a series of predefined tests to ensure the emulator is functio
 - `include/ARM/arm_instructions_MOV.h`: Header file for ARM instruction implementations.
 - `include/cpu.h`: Header file for the CPU class.
 
+## Test Cases
+
+| Test Case                | Description                                      |
+|--------------------------|--------------------------------------------------|
+| `testMOV`                | Tests the MOV instruction                        | 
+| `testMVN`                | Tests the MVN instruction                        | 
+| `testMRS`                | Tests the MRS instruction                        | 
+| `testMSR`                | Tests the MSR instruction                        | 
+| `testMSRImmediate`       | Tests the MSRImmediate instruction               | 
+| `testSwitchMode`         | Tests switching between different CPU modes      |
+
+
 ### Running the Emulator
 
 To run the emulator, execute the following command from the build directory:
