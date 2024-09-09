@@ -113,31 +113,9 @@ void executeMSR(CPU& cpu, uint32_t instruction) {
     std::cout << "Value from Rm: " << std::hex << value << std::endl;
 
     if (psr == 0) { // Update CPSR
-        if (fieldMask & 0x1) { // Control field
-            cpu.setCPSR(Field::CONTROL, value);
-        }
-        if (fieldMask & 0x2) { // Extension field
-            cpu.setCPSR(Field::CPSR, (cpu.getCPSR() & 0xFFFF00FF) | (value & 0xFF00));
-        }
-        if (fieldMask & 0x4) { // Status field
-            cpu.setCPSR(Field::CPSR, (cpu.getCPSR() & 0xFF00FFFF) | (value & 0xFF0000));
-        }
-        if (fieldMask & 0x8) { // Flags field
-            cpu.setCPSR(Field::FLAGS, value);
-        }
+        cpu.setCPSR(value, fieldMask);
     } else { // Update SPSR
-        if (fieldMask & 0x1) { // Control field
-            cpu.setSPSR(Field::CONTROL, value);
-        }
-        if (fieldMask & 0x2) { // Extension field
-            cpu.setSPSR(Field::SPSR, (cpu.getSPSR() & 0xFFFF00FF) | (value & 0xFF00));
-        }
-        if (fieldMask & 0x4) { // Status field
-            cpu.setSPSR(Field::SPSR, (cpu.getSPSR() & 0xFF00FFFF) | (value & 0xFF0000));
-        }
-        if (fieldMask & 0x8) { // Flags field
-            cpu.setSPSR(Field::FLAGS, value);
-        }
+        cpu.setSPSR(value, fieldMask);
     }
 
     // Debug prints after update
@@ -174,30 +152,8 @@ void executeMSRImmediate(CPU& cpu, uint32_t instruction) {
 
     // Update the appropriate PSR (CPSR or SPSR) based on the field mask
     if (psr == 0) {  // Update CPSR
-        if (fieldMask & 0x1) {  // Control field (lowest 8 bits)
-            cpu.setCPSR(Field::CONTROL, value & 0xFF);  // Only set control bits
-        }
-        if (fieldMask & 0x2) {  // Extension field (next 8 bits)
-            cpu.setCPSR(Field::CPSR, (cpu.getCPSR() & 0xFFFF00FF) | (value & 0xFF00));  // Set extension bits
-        }
-        if (fieldMask & 0x4) {  // Status field (next 8 bits)
-            cpu.setCPSR(Field::CPSR, (cpu.getCPSR() & 0xFF00FFFF) | (value & 0xFF0000));  // Set status bits
-        }
-        if (fieldMask & 0x8) {  // Flags field (highest 4 bits: NZCV)
-            cpu.setCPSR(Field::FLAGS, value & 0xF0000000);  // Set flags in top 4 bits
-        }
+        cpu.setCPSR(value, fieldMask);
     } else {  // Update SPSR
-        if (fieldMask & 0x1) {  // Control field (lowest 8 bits)
-            cpu.setSPSR(Field::CONTROL, value & 0xFF);  // Only set control bits
-        }
-        if (fieldMask & 0x2) {  // Extension field (next 8 bits)
-            cpu.setSPSR(Field::SPSR, (cpu.getSPSR() & 0xFFFF00FF) | (value & 0xFF00));  // Set extension bits
-        }
-        if (fieldMask & 0x4) {  // Status field (next 8 bits)
-            cpu.setSPSR(Field::SPSR, (cpu.getSPSR() & 0xFF00FFFF) | (value & 0xFF0000));  // Set status bits
-        }
-        if (fieldMask & 0x8) {  // Flags field (highest 4 bits: NZCV)
-            cpu.setSPSR(Field::FLAGS, value & 0xF0000000);  // Set flags in top 4 bits
-        }
+        cpu.setSPSR(value, fieldMask);
     }
 }

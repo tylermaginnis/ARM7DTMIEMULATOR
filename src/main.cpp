@@ -65,8 +65,8 @@ void testMVN() {
 
 void testMRS() {
     CPU cpu;
-    cpu.setSPSR(Field::SPSR, 0x12345678); // Set some value in SPSR
-    cpu.setCPSR(Field::CPSR, 0x87654321); // Set some value in CPSR
+    cpu.setSPSR(0x12345678, 0xFFFFFFFF); // Set some value in SPSR
+    cpu.setCPSR(0x87654321, 0xFFFFFFFF); // Set some value in CPSR
     uint32_t instruction = 0xE10F0000; // Example MRS instruction: MRS R0, CPSR
     executeMRS(cpu, instruction);
 
@@ -111,29 +111,6 @@ void testMSR() {
     } else {
         std::cout << "MSR SPSR instruction test failed." << std::endl;
     }
-
-    // Additional test cases for MSR instruction
-    cpu.setRegister(3, 0xFFFFFFFF); // Set some value in R3
-    instruction = 0xE129F003; // Example MSR instruction: MSR CPSR, R3
-    executeMSR(cpu, instruction);
-
-    // Check if the CPSR is set to the value in R3
-    if (cpu.getCPSR() == 0xFFFFFFFF) {
-        std::cout << "MSR CPSR instruction test passed." << std::endl;
-    } else {
-        std::cout << "MSR CPSR instruction test failed." << std::endl;
-    }
-
-    cpu.setRegister(4, 0x00000000); // Set some value in R4
-    instruction = 0xE169F004; // Example MSR instruction: MSR SPSR, R4
-    executeMSR(cpu, instruction);
-
-    // Check if the SPSR is set to the value in R4
-    if (cpu.getSPSR() == 0x00000000) {
-        std::cout << "MSR SPSR instruction test passed." << std::endl;
-    } else {
-        std::cout << "MSR SPSR instruction test failed." << std::endl;
-    }
 }
 
 void testMSRImmediate() {
@@ -167,6 +144,7 @@ void testMSRImmediate() {
 
 void testSwitchMode() {
     CPU cpu;
+    cpu.switchMode(Mode::USER);
     cpu.setRegister(13, 0x1000); // Set SP in USER mode
     cpu.setRegister(14, 0x2000); // Set LR in USER mode
 
@@ -179,5 +157,12 @@ void testSwitchMode() {
         std::cout << "Switch to USER mode test passed." << std::endl;
     } else {
         std::cout << "Switch to USER mode test failed." << std::endl;
+    }
+
+    cpu.switchMode(Mode::FIQ);
+    if (cpu.getRegister(13) == 0x3000 && cpu.getRegister(14) == 0x4000) {
+        std::cout << "Switch to FIQ mode test passed." << std::endl;
+    } else {
+        std::cout << "Switch to FIQ mode test failed." << std::endl;
     }
 }

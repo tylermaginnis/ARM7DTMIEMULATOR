@@ -8,7 +8,9 @@ enum class Field {
     CONTROL,
     FLAGS,
     SPSR,
-    CPSR
+    CPSR,
+    ALL,
+    INVALID
 };
 
 enum class Condition {
@@ -45,8 +47,9 @@ public:
     uint32_t getRegister(uint32_t reg);
     uint32_t getSPSR();
     uint32_t getCPSR();
-    void setSPSR(Field field, uint32_t value);
-    void setCPSR(Field field, uint32_t value);
+    void setSPSR(uint32_t field, uint32_t value);
+    void setCPSR(uint32_t field, uint32_t value);
+    void handleImmediateValue(uint32_t& registerValue, uint32_t immediateValue, uint32_t fieldMask, bool isCPSR);
     bool checkCondition(Condition cond);
     void updateFlags(uint32_t result);
     void setCPSRControl(uint32_t value);
