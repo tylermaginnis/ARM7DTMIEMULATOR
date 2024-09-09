@@ -106,6 +106,8 @@ bool CPU::checkCondition(Condition cond) {
 
 void CPU::updateFlags(uint32_t result) {
     std::cout << "updateFlags called with result: " << std::hex << result << std::endl;
+    
+    // Update Z flag
     if (result == 0) {
         cpsr |= 0x40000000; // Set Z flag
         std::cout << "Z flag set" << std::endl;
@@ -114,6 +116,7 @@ void CPU::updateFlags(uint32_t result) {
         std::cout << "Z flag cleared" << std::endl;
     }
 
+    // Update N flag
     if (result & 0x80000000) {
         cpsr |= 0x80000000; // Set N flag
         std::cout << "N flag set" << std::endl;
@@ -122,7 +125,10 @@ void CPU::updateFlags(uint32_t result) {
         std::cout << "N flag cleared" << std::endl;
     }
 
-    // Note: C and V flags are not updated here. They should be updated based on the specific operation.
+    // Update C and V flags based on specific operations
+    // Example for MOV and MVN (you may need to adjust based on your logic)
+    // Assuming C and V flags are not affected by MOV and MVN
+    // You can add logic here if needed for other instructions
 }
 
 void CPU::setCPSR(uint32_t value, uint32_t fieldMask) {
@@ -227,32 +233,22 @@ void CPU::switchMode(Mode mode) {
     // Save current mode's banked registers
     switch (currentMode) {
         case Mode::FIQ:
-            std::cout << "Saving FIQ mode banked registers" << std::endl;
-            banked_r8_fiq = registers[8];
-            banked_r9_fiq = registers[9];
-            banked_r10_fiq = registers[10];
-            banked_r11_fiq = registers[11];
-            banked_r12_fiq = registers[12];
             banked_r13_fiq = registers[13];
             banked_r14_fiq = registers[14];
             break;
         case Mode::IRQ:
-            std::cout << "Saving IRQ mode banked registers" << std::endl;
             banked_r13_irq = registers[13];
             banked_r14_irq = registers[14];
             break;
         case Mode::SUPERVISOR:
-            std::cout << "Saving SUPERVISOR mode banked registers" << std::endl;
             banked_r13_svc = registers[13];
             banked_r14_svc = registers[14];
             break;
         case Mode::ABORT:
-            std::cout << "Saving ABORT mode banked registers" << std::endl;
             banked_r13_abt = registers[13];
             banked_r14_abt = registers[14];
             break;
         case Mode::UNDEFINED:
-            std::cout << "Saving UNDEFINED mode banked registers" << std::endl;
             banked_r13_und = registers[13];
             banked_r14_und = registers[14];
             break;
@@ -267,34 +263,27 @@ void CPU::switchMode(Mode mode) {
     // Restore new mode's banked registers
     switch (currentMode) {
         case Mode::FIQ:
-            std::cout << "Restoring FIQ mode banked registers" << std::endl;
-            registers[8] = banked_r8_fiq;
-            registers[9] = banked_r9_fiq;
-            registers[10] = banked_r10_fiq;
-            registers[11] = banked_r11_fiq;
-            registers[12] = banked_r12_fiq;
             registers[13] = banked_r13_fiq;
             registers[14] = banked_r14_fiq;
             break;
         case Mode::IRQ:
-            std::cout << "Restoring IRQ mode banked registers" << std::endl;
             registers[13] = banked_r13_irq;
             registers[14] = banked_r14_irq;
             break;
         case Mode::SUPERVISOR:
-            std::cout << "Restoring SUPERVISOR mode banked registers" << std::endl;
             registers[13] = banked_r13_svc;
             registers[14] = banked_r14_svc;
             break;
         case Mode::ABORT:
-            std::cout << "Restoring ABORT mode banked registers" << std::endl;
             registers[13] = banked_r13_abt;
             registers[14] = banked_r14_abt;
             break;
         case Mode::UNDEFINED:
-            std::cout << "Restoring UNDEFINED mode banked registers" << std::endl;
             registers[13] = banked_r13_und;
             registers[14] = banked_r14_und;
+            break;
+        case Mode::USER:
+            // USER mode uses the main registers, no action needed
             break;
         default:
             break;

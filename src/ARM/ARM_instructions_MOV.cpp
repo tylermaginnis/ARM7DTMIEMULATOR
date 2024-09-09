@@ -25,6 +25,12 @@ void executeMOV(CPU& cpu, uint32_t instruction) {
     // Execute MOV
     cpu.setRegister(Rd, Oprnd2);
 
+    // Update flags if S bit is set
+    if (S) {
+        cpu.updateFlags(Oprnd2);
+        std::cout << "Flags updated with " << Oprnd2 << std::endl;
+    }
+
     // Debug print
     std::cout << "Register " << Rd << " set to " << Oprnd2 << std::endl;
 
@@ -58,6 +64,11 @@ void executeMVN(CPU& cpu, uint32_t instruction) {
     // Execute MVN (bitwise NOT of Oprnd2)
     uint32_t result = ~Oprnd2;
     cpu.setRegister(Rd, result);
+
+    // Update flags if S bit is set
+    if (S) {
+        cpu.updateFlags(result);
+    }
 
     // Debug print
     std::cout << "Result: " << result << std::endl;

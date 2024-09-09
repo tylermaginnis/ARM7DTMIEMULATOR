@@ -3,42 +3,41 @@
 #include "cpu.h"
 #include "../include/ARM/arm_instructions_MOV.h"
 
-void testMOV();
-void testMVN(); 
-void testMRS();
-void testMSR();
-void testMSRImmediate();
-void testSwitchMode();
+void testMOV(CPU& cpu);
+void testMVN(CPU& cpu); 
+void testMRS(CPU& cpu);
+void testMSR(CPU& cpu);
+void testMSRImmediate(CPU& cpu);
+void testSwitchMode(CPU& cpu);
 
 int main(int argc, char* argv[]) {
+    CPU cpu; // Create a single CPU instance
+
     if (argc > 1) {
         std::string arg = argv[1];
         if (arg == "test") {
-            testMOV();
+            testMOV(cpu);
             std::cout << "-----------------------------------------" << std::endl;
-            testMVN();
+            testMVN(cpu);
             std::cout << "-----------------------------------------" << std::endl;
-            testMRS();
+            testMRS(cpu);
             std::cout << "-----------------------------------------" << std::endl;
-            testMSR(); 
+            testMSR(cpu); 
             std::cout << "-----------------------------------------" << std::endl;
-            testMSRImmediate();
+            testMSRImmediate(cpu);
             std::cout << "-----------------------------------------" << std::endl;
-            testSwitchMode();
+            testSwitchMode(cpu);
             std::cout << "-----------------------------------------" << std::endl;
-            // Add calls to other test functions here
             return 0;
         }
     }
 
-    CPU cpu;
     // Add any initialization or main code here
 
     return 0;
 }
 
-void testMOV() {
-    CPU cpu;
+void testMOV(CPU& cpu) {
     uint32_t instruction = 0xE3A01001; // Example MOV instruction: MOV R1, #1
     executeMOV(cpu, instruction);
 
@@ -50,8 +49,7 @@ void testMOV() {
     }
 }
 
-void testMVN() {
-    CPU cpu;
+void testMVN(CPU& cpu) {
     uint32_t instruction = 0xE3E01001; // Example MVN instruction: MVN R1, #1
     executeMVN(cpu, instruction);
 
@@ -63,8 +61,7 @@ void testMVN() {
     }
 }
 
-void testMRS() {
-    CPU cpu;
+void testMRS(CPU& cpu) {
     cpu.setSPSR(0x12345678, 0xFFFFFFFF); // Set some value in SPSR
     cpu.setCPSR(0x87654321, 0xFFFFFFFF); // Set some value in CPSR
     uint32_t instruction = 0xE10F0000; // Example MRS instruction: MRS R0, CPSR
@@ -88,8 +85,7 @@ void testMRS() {
     }
 }
 
-void testMSR() {
-    CPU cpu;
+void testMSR(CPU& cpu) {
     cpu.setRegister(1, 0x87654321); // Set some value in R1
     uint32_t instruction = 0xE129F001; // Example MSR instruction: MSR CPSR, R1
     executeMSR(cpu, instruction);
@@ -113,8 +109,7 @@ void testMSR() {
     }
 }
 
-void testMSRImmediate() {
-    CPU cpu;
+void testMSRImmediate(CPU& cpu) {
     uint32_t instruction = 0xE32EF001;  // MSR CPSR_f, #1 (set flags to 1)
     executeMSRImmediate(cpu, instruction);
 
@@ -142,8 +137,7 @@ void testMSRImmediate() {
     }
 }
 
-void testSwitchMode() {
-    CPU cpu;
+void testSwitchMode(CPU& cpu) {
     cpu.switchMode(Mode::USER);
     cpu.setRegister(13, 0x1000); // Set SP in USER mode
     cpu.setRegister(14, 0x2000); // Set LR in USER mode
