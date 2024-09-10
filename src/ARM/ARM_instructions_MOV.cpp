@@ -2,6 +2,10 @@
 #include <iostream>
 #include <string>
 
+#include "../../include/ARM/arm_instructions_MOV.h"
+#include <iostream>
+#include <string>
+
 void executeMOV(CPU& cpu, uint32_t instruction) {
     // Extract condition, S bit, Rd, and Oprnd2 from the instruction
     uint32_t cond = (instruction >> 28) & 0xF;
@@ -25,20 +29,20 @@ void executeMOV(CPU& cpu, uint32_t instruction) {
     // Execute MOV
     cpu.setRegister(Rd, Oprnd2);
 
-    // Update flags if S bit is set
-    if (S) {
+    // If S bit is set and Rd is R15 (PC), copy SPSR to CPSR
+    if (S && Rd == 15) {
+        cpu.setCPSR(cpu.getSPSR(), 0xFFFFFFFF);
+        std::cout << "SPSR copied to CPSR" << std::endl;
+    }
+
+    // Update flags if S bit is set and Rd is not R15 (PC)
+    if (S && Rd != 15) {
         cpu.updateFlags(Oprnd2);
         std::cout << "Flags updated with " << Oprnd2 << std::endl;
     }
 
     // Debug print
     std::cout << "Register " << Rd << " set to " << Oprnd2 << std::endl;
-
-    // Update flags if S bit is set
-    if (S) {
-        cpu.updateFlags(Oprnd2);
-        std::cout << "Flags updated with " << Oprnd2 << std::endl;
-    }
 }
 
 void executeMVN(CPU& cpu, uint32_t instruction) {

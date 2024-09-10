@@ -54,7 +54,7 @@ This will execute a series of predefined tests to ensure the emulator is functio
 
 ## Glossary of ARM7TDMI Terminology
 
-- **MOV**: Move - Transfers a value from one register to another or loads an immediate value into a register.
+- **MOV**: Move - Transfers a value from one register to another or loads an immediate value into a register. If the S bit is set and the destination register is R15 (PC), the SPSR is copied to the CPSR. If the S bit is set and the destination register is not R15, the flags are updated with the operand value.
 - **MVN**: Move Not - Transfers the bitwise NOT of an immediate value or a register value into a destination register.
 - **MRS**: Move PSR to Register - Transfers the value of the CPSR or SPSR to a general-purpose register.
 - **MSR**: Move Register to PSR - Transfers a value from a general-purpose register to the CPSR or SPSR.
