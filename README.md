@@ -92,6 +92,13 @@ The following analysis is based on the output of the command-line interface (CLI
 <table>
   <tr>
     <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MOV.svg" alt="MOV Instruction Test" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <strong>Instruction</strong>: `e3a01001`<br>
       <strong>Condition</strong>: Always (e)<br>
       <strong>S bit</strong>: 0<br>
@@ -101,17 +108,19 @@ The following analysis is based on the output of the command-line interface (CLI
       <strong>Register Update</strong>: R1 set to 1<br>
       <strong>Result</strong>: Test passed<br>
     </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/MOV/result/MOV.svg" alt="MOV Instruction Test" />
-      </p>
-    </td>
   </tr>
 </table>
 
 #### MVN Instruction Test
 
 <table>
+  <tr>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MVN.svg" alt="MVN Instruction Test" />
+      </p>
+    </td>
+  </tr>
   <tr>
     <td>
       <strong>Instruction</strong>: `e3e01001`<br>
@@ -123,11 +132,6 @@ The following analysis is based on the output of the command-line interface (CLI
       <strong>Register Update</strong>: R1 set to 0xfffffffe<br>
       <strong>Result</strong>: Test passed<br>
     </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/MOV/result/MVN.svg" alt="MVN Instruction Test" />
-      </p>
-    </td>
   </tr>
 </table>
 
@@ -136,18 +140,20 @@ The following analysis is based on the output of the command-line interface (CLI
 <table>
   <tr>
     <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MRS.svg" alt="MRS Instruction Test (CPSR)" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <strong>Instruction</strong>: `e10f0000`<br>
       <strong>Condition</strong>: Always (e)<br>
       <strong>Destination Register (Rd)</strong>: 0<br>
       <strong>PSR</strong>: CPSR (0)<br>
       <strong>Condition Check</strong>: Passed<br>
-      <strong>Register Update</strong>: Register 0 set to the value of CPSR (`0x87654321`)
-      <strong>Result</strong>: Test passed
-    </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/MOV/result/MRS.svg" alt="MRS Instruction Test (CPSR)" />
-      </p>
+      <strong>Register Update</strong>: Register 0 set to the value of CPSR (`0x87654321`)<br>
+      <strong>Result</strong>: Test passed<br>
     </td>
   </tr>
 </table>
@@ -157,18 +163,20 @@ The following analysis is based on the output of the command-line interface (CLI
 <table>
   <tr>
     <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MRS.svg" alt="MRS Instruction Test (SPSR)" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <strong>Instruction</strong>: `e14f0000`<br>
       <strong>Condition</strong>: Always (e)<br>
       <strong>Destination Register (Rd)</strong>: 0<br>
       <strong>PSR</strong>: SPSR (1)<br>
-      <strong>Condition Check</strong>: Passed
-      <strong>Register Update</strong>: Register 0 set to the value of SPSR (`0x12345678`)
-      <strong>Result</strong>: Test passed
-    </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/MOV/result/MRS.svg" alt="MRS Instruction Test (SPSR)" />
-      </p>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: Register 0 set to the value of SPSR (`0x12345678`)<br>
+      <strong>Result</strong>: Test passed<br>
     </td>
   </tr>
 </table>
@@ -178,19 +186,21 @@ The following analysis is based on the output of the command-line interface (CLI
 <table>
   <tr>
     <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MSR.svg" alt="MSR Instruction Test (CPSR)" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <strong>Instruction</strong>: `e129f001`<br>
       <strong>Condition</strong>: Always (e)<br>
       <strong>Field Mask</strong>: 9<br>
       <strong>PSR</strong>: CPSR (0)<br>
       <strong>Source Register (Rm)</strong>: 1<br>
-      <strong>Condition Check</strong>: Passed
-      <strong>Register Update</strong>: CPSR set to the value of Register 1 (`0x87654321`)
-      <strong>Result</strong>: Test passed
-    </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/MOV/result/MSR.svg" alt="MSR Instruction Test (CPSR)" />
-      </p>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: CPSR set to the value of Register 1 (`0x87654321`)<br>
+      <strong>Result</strong>: Test passed<br>
     </td>
   </tr>
 </table>
@@ -200,19 +210,21 @@ The following analysis is based on the output of the command-line interface (CLI
 <table>
   <tr>
     <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MSR.svg" alt="MSR Instruction Test (SPSR)" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <strong>Instruction</strong>: `e169f002`<br>
       <strong>Condition</strong>: Always (e)<br>
       <strong>Field Mask</strong>: 9<br>
       <strong>PSR</strong>: SPSR (1)<br>
       <strong>Source Register (Rm)</strong>: 2<br>
-      <strong>Condition Check</strong>: Passed
-      <strong>Register Update</strong>: SPSR set to the value of Register 2 (`0x12345678`)
-      <strong>Result</strong>: Test passed
-    </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/MOV/result/MSR.svg" alt="MSR Instruction Test (SPSR)" />
-      </p>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: SPSR set to the value of Register 2 (`0x12345678`)<br>
+      <strong>Result</strong>: Test passed<br>
     </td>
   </tr>
 </table>
@@ -222,20 +234,22 @@ The following analysis is based on the output of the command-line interface (CLI
 <table>
   <tr>
     <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MSRImmediate.svg" alt="MSR Immediate Instruction Test (CPSR)" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <strong>Instruction</strong>: `e32ef001`<br>
       <strong>Condition</strong>: Always (e)<br>
       <strong>Field Mask</strong>: e<br>
       <strong>PSR</strong>: CPSR (0)<br>
       <strong>Immediate Value</strong>: 1<br>
       <strong>Rotate</strong>: 0<br>
-      <strong>Condition Check</strong>: Passed
-      <strong>Register Update</strong>: CPSR set to `0x17000021` after handling the immediate value
-      <strong>Result</strong>: Test passed
-    </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/MOV/result/MSRImmediate.svg" alt="MSR Immediate Instruction Test (CPSR)" />
-      </p>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: CPSR set to `0x17000021` after handling the immediate value<br>
+      <strong>Result</strong>: Test passed<br>
     </td>
   </tr>
 </table>
@@ -245,20 +259,22 @@ The following analysis is based on the output of the command-line interface (CLI
 <table>
   <tr>
     <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MSRImmediate.svg" alt="MSR Immediate Instruction Test (SPSR)" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <strong>Instruction</strong>: `e36ef002`<br>
       <strong>Condition</strong>: Always (e)<br>
       <strong>Field Mask</strong>: e<br>
       <strong>PSR</strong>: SPSR (1)<br>    
       <strong>Immediate Value</strong>: 2<br>
       <strong>Rotate</strong>: 0<br>
-      <strong>Condition Check</strong>: Passed
-      <strong>Register Update</strong>: SPSR set to `0x22000078` after handling the immediate value
-      <strong>Result</strong>: Test passed
-    </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/MOV/result/MSRImmediate.svg" alt="MSR Immediate Instruction Test (SPSR)" />
-      </p>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: SPSR set to `0x22000078` after handling the immediate value<br>
+      <strong>Result</strong>: Test passed<br>
     </td>
   </tr>
 </table>
@@ -286,6 +302,13 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 <table>
   <tr>
     <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/ADD.svg" alt="ADD Instruction Test" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <strong>Instruction</strong>: `e2811003`<br>
       <strong>Condition</strong>: Always (e)<br>
       <strong>S bit</strong>: 0<br>
@@ -293,13 +316,8 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
       <strong>Source Register (Rn)</strong>: 1<br>
       <strong>Operand2</strong>: 3<br>
       <strong>Condition Check</strong>: Passed<br>
-      <strong>Register Update</strong>: Register 1 set to 8 (`5 + 3`)
+      <strong>Register Update</strong>: Register 1 set to 8 (`5 + 3`)<br>
       <strong>Result</strong>: Test passed
-    </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/ARITHMETIC/result/ADD.svg" alt="ADD Instruction Test" />
-      </p>
     </td>
   </tr>
 </table>
@@ -307,6 +325,13 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 #### ADC Instruction Test
 
 <table>
+  <tr>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/ADC.svg" alt="ADC Instruction Test" />
+      </p>
+    </td>
+  </tr>
   <tr>
     <td>
       <strong>Instruction</strong>: `e0a11002`<br>
@@ -317,13 +342,8 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
       <strong>Source Register (Rm)</strong>: 2<br>
       <strong>Condition Check</strong>: Passed<br>
       <strong>Carry Flag</strong>: 1<br>
-      <strong>Register Update</strong>: Register 1 set to 9 (`5 + 3 + 1`)
+      <strong>Register Update</strong>: Register 1 set to 9 (`5 + 3 + 1`)<br>
       <strong>Result</strong>: Test passed
-    </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/ARITHMETIC/result/ADC.svg" alt="ADC Instruction Test" />
-      </p>
     </td>
   </tr>
 </table>
@@ -333,20 +353,22 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 <table>
   <tr>
     <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/SUB.svg" alt="SUB Instruction Test" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <strong>Instruction</strong>: `e2411003`<br>
       <strong>Condition</strong>: Always (e)<br>
       <strong>S bit</strong>: 0<br>
       <strong>Destination Register (Rd)</strong>: 1<br>
       <strong>Source Register (Rn)</strong>: 1<br>
-      <strong>Operand2</strong>: 3
+      <strong>Operand2</strong>: 3<br>
       <strong>Condition Check</strong>: Passed<br>
-      <strong>Register Update</strong>: Register 1 set to 7 (`10 - 3`)
+      <strong>Register Update</strong>: Register 1 set to 7 (`10 - 3`)<br>
       <strong>Result</strong>: Test passed
-    </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/ARITHMETIC/result/SUB.svg" alt="SUB Instruction Test" />
-      </p>
     </td>
   </tr>
 </table>
@@ -355,21 +377,23 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 <table>
   <tr>
     <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/SBC.svg" alt="SBC Instruction Test" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <strong>Instruction</strong>: `e0c11002`<br>
       <strong>Condition</strong>: Always (e)<br>
       <strong>S bit</strong>: 0<br>
       <strong>Destination Register (Rd)</strong>: 1<br>
       <strong>Source Register (Rn)</strong>: 1<br>
       <strong>Source Register (Rm)</strong>: 2<br>
-      <strong>Condition Check</strong>: Passed
-      <strong>Carry Flag</strong>: 1
-      <strong>Register Update</strong>: Register 1 set to 7 (`10 - 3 - (1 - 1)`)
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Carry Flag</strong>: 1<br>
+      <strong>Register Update</strong>: Register 1 set to 7 (`10 - 3 - (1 - 1)`)<br>
       <strong>Result</strong>: Test passed
-    </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/ARITHMETIC/result/SBC.svg" alt="SBC Instruction Test" />
-      </p>
     </td>
   </tr>
 </table>
@@ -379,20 +403,22 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 <table>
   <tr>
     <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/RSB.svg" alt="RSB Instruction Test" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <strong>Instruction</strong>: `e2611003`<br>
       <strong>Condition</strong>: Always (e)<br>
       <strong>S bit</strong>: 0<br>
       <strong>Destination Register (Rd)</strong>: 1<br>
       <strong>Source Register (Rn)</strong>: 1<br>
-      <strong>Operand2</strong>: 3
-      <strong>Condition Check</strong>: Passed
-      <strong>Register Update</strong>: Register 1 set to -2 (`3 - 5`)
+      <strong>Operand2</strong>: 3<br>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: Register 1 set to -2 (`3 - 5`)<br>
       <strong>Result</strong>: Test passed
-    </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/ARITHMETIC/result/RSB.svg" alt="RSB Instruction Test" />
-      </p>
     </td>
   </tr>
 </table>
@@ -402,21 +428,23 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 <table>
   <tr>
     <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/RSC.svg" alt="RSC Instruction Test" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <strong>Instruction</strong>: `e0e11002`<br>
       <strong>Condition</strong>: Always (e)<br>
       <strong>S bit</strong>: 0<br>
       <strong>Destination Register (Rd)</strong>: 1<br>
       <strong>Source Register (Rn)</strong>: 1<br>
-      <strong>Source Register (Rm)**: 2
-      <strong>Condition Check</strong>: Passed
-      <strong>Carry Flag</strong>: 1
-      <strong>Register Update</strong>: Register 1 set to -3 (`2 - 5 - (1 - 1)`)
+      <strong>Source Register (Rm)</strong>: 2<br>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Carry Flag</strong>: 1<br>
+      <strong>Register Update</strong>: Register 1 set to -3 (`2 - 5 - (1 - 1)`)<br>
       <strong>Result</strong>: Test passed
-    </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/ARITHMETIC/result/RSC.svg" alt="RSC Instruction Test" />
-      </p>
     </td>
   </tr>
 </table>
@@ -426,20 +454,22 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 <table>
   <tr>
     <td>
-      <strong>Instruction</strong>: `e0010291`
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/MUL.svg" alt="MUL Instruction Test" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e0010291`<br>
       <strong>Condition</strong>: Always (e)<br>
       <strong>S bit</strong>: 0<br>
       <strong>Destination Register (Rd)</strong>: 1<br>
       <strong>Source Register (Rm)</strong>: 1<br>
-      <strong>Source Register (Rs)**: 2
-      <strong>Condition Check</strong>: Passed
-      <strong>Register Update</strong>: Register 1 set to 15 (`5 * 3`)
+      <strong>Source Register (Rs)</strong>: 2<br>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: Register 1 set to 15 (`5 * 3`)<br>
       <strong>Result</strong>: Test passed
-    </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/ARITHMETIC/result/MUL.svg" alt="MUL Instruction Test" />
-      </p>
     </td>
   </tr>
 </table>
@@ -449,21 +479,23 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 <table>
   <tr>
     <td>
-      <strong>Instruction</strong>: `e0211392`
-      <strong>Condition</strong>: Always (e)<br>
-      <strong>S bit</strong>: 0<br>
-      <strong>Destination Register (Rd)**: 1
-      <strong>Source Register (Rm)**: 2
-      <strong>Source Register (Rs)**: 3
-      <strong>Source Register (Rn)**: 1
-      <strong>Condition Check</strong>: Passed
-      <strong>Register Update</strong>: Register 1 set to 35 (`5 * 3 + 10`)
-      <strong>Result</strong>: Test passed
-    </td>
-    <td>
       <p align="center">
         <img src="docs/diagrams/ARITHMETIC/result/MLA.svg" alt="MLA Instruction Test" />
       </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e0211392`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0<br>
+      <strong>Destination Register (Rd)</strong>: 1<br>
+      <strong>Source Register (Rm)</strong>: 2<br>
+      <strong>Source Register (Rs)</strong>: 3<br>
+      <strong>Source Register (Rn)</strong>: 1<br>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: Register 1 set to 35 (`5 * 3 + 10`)<br>
+      <strong>Result</strong>: Test passed
     </td>
   </tr>
 </table>
@@ -473,21 +505,23 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 <table>
   <tr>
     <td>
-      <strong>Instruction</strong>: `e0830493`
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/UMULL.svg" alt="UMULL Instruction Test" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e0830493`<br>
       <strong>Condition</strong>: Always (e)<br>
       <strong>S bit</strong>: 0<br>
       <strong>Destination Register Low (RdLo)</strong>: 0<br>
       <strong>Destination Register High (RdHi)</strong>: 3<br>
-      <strong>Source Register (Rm)**: 3
-      <strong>Source Register (Rs)**: 4
-      <strong>Condition Check</strong>: Passed
-      <strong>Register Update</strong>: Register 0 set to `0xFFFFFFF8`, Register 3 set to `0x7`
+      <strong>Source Register (Rm)</strong>: 3<br>
+      <strong>Source Register (Rs)</strong>: 4<br>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: Register 0 set to `0xFFFFFFF8`, Register 3 set to `0x7`<br>
       <strong>Result</strong>: Test passed
-    </td>
-    <td>
-      <p align="center">
-        <img src="docs/diagrams/ARITHMETIC/result/UMULL.svg" alt="UMULL Instruction Test" />
-      </p>
     </td>
   </tr>
 </table>
@@ -497,21 +531,23 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 <table>
   <tr>
     <td>
-      <strong>Instruction</strong>: `e0e12392`
-      <strong>Condition</strong>: Always (e)<br>
-      <strong>S bit</strong>: 0
-      <strong>Destination Register Low (RdLo)</strong>: 2
-      <strong>Destination Register High (RdHi)</strong>: 1
-      <strong>Source Register (Rm)</strong>: 2
-      <strong>Source Register (Rs)</strong>: 3
-      <strong>Condition Check</strong>: Passed
-      <strong>Register Update</strong>: Register 2 set to `0xDB97530E`, Register 1 set to `0x12345677`
-      <strong>Result</strong>: Test passed
-    </td>
-    <td>
       <p align="center">
         <img src="docs/diagrams/ARITHMETIC/result/UMLAL.svg" alt="UMLAL Instruction Test" />
       </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e0e12392`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0<br>
+      <strong>Destination Register Low (RdLo)</strong>: 2<br>
+      <strong>Destination Register High (RdHi)</strong>: 1<br>
+      <strong>Source Register (Rm)</strong>: 2<br>
+      <strong>Source Register (Rs)</strong>: 3<br>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: Register 2 set to `0xDB97530E`, Register 1 set to `0x12345677`<br>
+      <strong>Result</strong>: Test passed
     </td>
   </tr>
 </table>
