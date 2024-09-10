@@ -73,6 +73,8 @@ This will execute a series of predefined tests to ensure the emulator is functio
 - **UMLAL**: Unsigned Multiply Long Accumulate - Multiplies two registers, adds the result to a third register, and stores the 64-bit result in two consecutive registers.
 - **SMULL**: Signed Multiply Long - Multiplies two registers and stores the 64-bit result in two consecutive registers.
 - **SMLAL**: Signed Multiply Long Accumulate - Multiplies two registers, adds the result to a third register, and stores the 64-bit result in two consecutive registers.
+- **CMP**: Compare - Subtracts a register from another register and updates the condition flags, but does not store the result.
+- **CMN**: Compare Negative - Adds a register to another register and updates the condition flags, but does not store the result.
 
 ## MOV Test Cases
 
