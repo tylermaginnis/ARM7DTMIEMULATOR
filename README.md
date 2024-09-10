@@ -341,15 +341,15 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
   </tr>
   <tr>
     <td>
-      <strong>Instruction</strong>: `e0a11002`<br>
-      <strong>Condition</strong>: Always (e)<br>
+      <strong>Instruction</strong>: `e0a11092`<br>
+      <strong>Condition</strong>: Equal (e)<br>
       <strong>S bit</strong>: 0<br>
       <strong>Destination Register (Rd)</strong>: 1<br>
       <strong>Source Register (Rn)</strong>: 1<br>
-      <strong>Source Register (Rm)</strong>: 2<br>
+      <strong>Shifter Operand</strong>: 92<br>
       <strong>Condition Check</strong>: Passed<br>
       <strong>Carry Flag</strong>: 1<br>
-      <strong>Register Update</strong>: Register 1 set to 9 (`5 + 3 + 1`)<br>
+      <strong>Register Update</strong>: Register 1 set to c (`5 + 3 + 1`)<br>
       <strong>Result</strong>: Test passed
     </td>
   </tr>
