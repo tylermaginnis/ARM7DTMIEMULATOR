@@ -1,0 +1,24 @@
+@startuml
+
+title CMN Instruction Execution
+
+participant "main.cpp" as Main
+participant "ARM_instructions_ARITHMETIC.cpp" as ARITH
+participant "cpu.cpp" as CPU
+
+Main -> ARITH: executeCMN(cpu, instruction)
+ARITH -> CPU: checkCondition(cond)
+CPU -> CPU: Evaluate condition
+CPU --> ARITH: Condition result
+alt Condition Passed
+    ARITH -> CPU: getRegister(Rn)
+    CPU --> ARITH: Rn value
+    ARITH -> CPU: getImmediateValue(imm)
+    CPU --> ARITH: imm value
+    ARITH -> CPU: setFlags(Rn + imm)
+    ARITH -> Main: Return
+else Condition Failed
+    ARITH -> Main: Return
+end
+
+@enduml

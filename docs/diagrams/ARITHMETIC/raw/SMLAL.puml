@@ -1,0 +1,32 @@
+@startuml
+
+title SMLAL Instruction Execution
+
+participant "main.cpp" as Main
+participant "ARM_instructions_ARITHMETIC.cpp" as ARITH
+participant "cpu.cpp" as CPU
+
+Main -> ARITH: executeSMLAL(cpu, instruction)
+ARITH -> CPU: checkCondition(cond)
+CPU -> CPU: Evaluate condition
+CPU --> ARITH: Condition result
+alt Condition Passed
+    ARITH -> CPU: getRegister(Rm)
+    CPU --> ARITH: Rm value
+    ARITH -> CPU: getRegister(Rs)
+    CPU --> ARITH: Rs value
+    ARITH -> CPU: getRegister(RdLo)
+    CPU --> ARITH: RdLo value
+    ARITH -> CPU: getRegister(RdHi)
+    CPU --> ARITH: RdHi value
+    ARITH -> CPU: setRegister(RdLo, (Rm * Rs + RdLo) & 0xFFFFFFFF)
+    ARITH -> CPU: setRegister(RdHi, ((Rm * Rs + RdLo) >> 32) + RdHi)
+    alt S bit is set
+        ARITH -> CPU: updateFlags(resultLo)
+    end
+    ARITH -> Main: Return
+else Condition Failed
+    ARITH -> Main: Return
+end
+
+@enduml
