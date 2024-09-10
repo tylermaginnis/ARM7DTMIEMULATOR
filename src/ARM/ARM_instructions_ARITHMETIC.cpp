@@ -40,12 +40,12 @@ void executeADD(CPU& cpu, uint32_t instruction) {
 
 
 void executeADC(CPU& cpu, uint32_t instruction) {
-    // Extract condition, S bit, Rd, Rn, and Oprnd2 from the instruction
+    // Extract condition, S bit, Rd, Rn, and shifter_operand from the instruction
     uint32_t cond = (instruction >> 28) & 0xF;
     uint32_t S = (instruction >> 20) & 0x1;
     uint32_t Rd = (instruction >> 12) & 0xF;
     uint32_t Rn = (instruction >> 16) & 0xF;
-    uint32_t Rm = instruction & 0xF; // Extract Rm as the register operand
+    uint32_t shifter_operand = instruction & 0xFFF; // This should be processed as a shifter operand
 
     // Debug prints
     std::cout << "Instruction: " << std::hex << instruction << std::endl;
@@ -53,7 +53,7 @@ void executeADC(CPU& cpu, uint32_t instruction) {
     std::cout << "S bit: " << S << std::endl;
     std::cout << "Rd: " << Rd << std::endl;
     std::cout << "Rn: " << Rn << std::endl;
-    std::cout << "Rm: " << Rm << std::endl;
+    std::cout << "Shifter Operand: " << shifter_operand << std::endl;
 
     // Check condition
     if (!cpu.checkCondition(static_cast<Condition>(cond))) {
@@ -68,8 +68,29 @@ void executeADC(CPU& cpu, uint32_t instruction) {
     uint32_t carry = (cpsr & 0x20000000) ? 1 : 0;
     std::cout << "Carry flag: " << carry << std::endl;
 
+    // Process shifter_operand
+    uint32_t Rm = shifter_operand & 0xF;
+    uint32_t shift_type = (shifter_operand >> 5) & 0x3;
+    uint32_t shift_amount = (shifter_operand >> 7) & 0x1F;
+
+    uint32_t operand2 = cpu.getRegister(Rm);
+    switch (shift_type) {
+        case 0: // Logical shift left
+            operand2 <<= shift_amount;
+            break;
+        case 1: // Logical shift right
+            operand2 >>= shift_amount;
+            break;
+        case 2: // Arithmetic shift right
+            operand2 = static_cast<int32_t>(operand2) >> shift_amount;
+            break;
+        case 3: // Rotate right
+            operand2 = (operand2 >> shift_amount) | (operand2 << (32 - shift_amount));
+            break;
+    }
+
     // Execute ADC
-    uint32_t result = cpu.getRegister(Rn) + cpu.getRegister(Rm) + carry;
+    uint32_t result = cpu.getRegister(Rn) + operand2 + carry;
     cpu.setRegister(Rd, result);
 
     // Update flags if S bit is set

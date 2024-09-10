@@ -17,7 +17,8 @@ alt Condition Passed
     CPU --> ARITH: Rn value
     ARITH -> CPU: getRegister(Rm)
     CPU --> ARITH: Rm value
-    ARITH -> CPU: setRegister(Rd, Rn + Rm + carry)
+    ARITH -> CPU: Process shifter_operand
+    ARITH -> CPU: setRegister(Rd, Rn + processed_operand + carry)
     alt S bit is set
         ARITH -> CPU: updateFlags(result)
     end

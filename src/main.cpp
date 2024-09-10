@@ -233,11 +233,11 @@ void testADC(CPU& cpu) {
     cpu.setRegister(2, 3); // Set R2 to 3
     cpu.setCPSR(0x20000000, 0xFFFFFFFF); // Set carry flag in CPSR
 
-    uint32_t instruction = 0xE0A11002; // Correct ADC instruction: ADC R1, R1, R2
+    uint32_t instruction = 0xE0A11092; // Correct ADC instruction with shifter operand: ADC R1, R1, R2, LSL #1
     executeADC(cpu, instruction);
 
-    // Check if the register R1 is set to 9 (5 + 3 + 1)
-    if (cpu.getRegister(1) == 9) {
+    // Check if the register R1 is set to 12 (5 + (3 << 1) + 1)
+    if (cpu.getRegister(1) == 12) {
         std::cout << "ADC instruction test passed." << std::endl;
     } else {
         std::cout << "ADC instruction test failed." << std::endl;
