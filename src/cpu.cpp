@@ -301,3 +301,7 @@ void CPU::switchMode(Mode mode) {
             break;
     }
 }
+
+uint32_t CPU::getFlags() const {
+    return cpsr & 0xF0000000; // Return only the flag bits (N, Z, C, V)
+}

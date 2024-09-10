@@ -58,6 +58,8 @@ public:
     void setSPSRControl(uint32_t value);
     void setSPSRFlags(uint32_t value);
     void switchMode(Mode mode);
+    uint32_t getFlags() const;
+
 
 private:
     uint32_t registers[16]; // R0-R15

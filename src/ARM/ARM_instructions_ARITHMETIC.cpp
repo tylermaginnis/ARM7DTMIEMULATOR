@@ -492,3 +492,63 @@ void executeSMLAL(CPU& cpu, uint32_t instruction) {
     std::cout << "Register " << RdLo << " set to " << resultLo << std::endl;
     std::cout << "Register " << RdHi << " set to " << resultHi << std::endl;
 }
+
+void executeCMP(CPU& cpu, uint32_t instruction) {
+    uint32_t cond = (instruction >> 28) & 0xF;
+    uint32_t Rn = (instruction >> 16) & 0xF;
+    uint32_t Oprnd2 = instruction & 0xFFF;
+
+    // Debug prints
+    std::cout << "Instruction: " << std::hex << instruction << std::endl;
+    std::cout << "Condition: " << cond << std::endl;
+    std::cout << "Rn: " << Rn << std::endl;
+    std::cout << "Oprnd2: " << Oprnd2 << std::endl;
+
+    // Check condition
+    if (!cpu.checkCondition(static_cast<Condition>(cond))) {
+        std::cout << "Condition failed, do not execute" << std::endl;
+        return;
+    }
+
+    // Execute CMP (subtract Oprnd2 from Rn and update flags)
+    uint32_t Rn_val = cpu.getRegister(Rn);
+    uint32_t result = Rn_val - Oprnd2;
+
+    // Update flags
+    cpu.updateFlags(result);
+
+    // Debug prints
+    std::cout << "Rn value: " << Rn_val << std::endl;
+    std::cout << "Result: " << result << std::endl;
+    std::cout << "Flags updated with " << result << std::endl;
+}
+
+void executeCMN(CPU& cpu, uint32_t instruction) {
+    uint32_t cond = (instruction >> 28) & 0xF;
+    uint32_t Rn = (instruction >> 16) & 0xF;
+    uint32_t Oprnd2 = instruction & 0xFFF;
+
+    // Debug prints
+    std::cout << "Instruction: " << std::hex << instruction << std::endl;
+    std::cout << "Condition: " << cond << std::endl;
+    std::cout << "Rn: " << Rn << std::endl;
+    std::cout << "Oprnd2: " << Oprnd2 << std::endl;
+
+    // Check condition
+    if (!cpu.checkCondition(static_cast<Condition>(cond))) {
+        std::cout << "Condition failed, do not execute" << std::endl;
+        return;
+    }
+
+    // Execute CMN (add Oprnd2 to Rn and update flags)
+    uint32_t Rn_val = cpu.getRegister(Rn);
+    uint32_t result = Rn_val + Oprnd2;
+
+    // Update flags
+    cpu.updateFlags(result);
+
+    // Debug prints
+    std::cout << "Rn value: " << Rn_val << std::endl;
+    std::cout << "Result: " << result << std::endl;
+    std::cout << "Flags updated with " << result << std::endl;
+}

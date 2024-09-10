@@ -24,6 +24,8 @@ void testUMULL(CPU& cpu);
 void testUMLAL(CPU& cpu);
 void testSMULL(CPU& cpu);
 void testSMLAL(CPU& cpu);
+void testCMP(CPU& cpu);
+void testCMN(CPU& cpu);
 
 void testSwitchMode(CPU& cpu);
 
@@ -68,6 +70,10 @@ int main(int argc, char* argv[]) {
             testSMULL(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             testSMLAL(cpu);
+            std::cout << "-----------------------------------------" << std::endl;
+            testCMP(cpu);
+            std::cout << "-----------------------------------------" << std::endl;
+            testCMN(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             //testSwitchMode(cpu);
             //std::cout << "-----------------------------------------" << std::endl;
@@ -409,5 +415,35 @@ void testSMLAL(CPU& cpu) {
         std::cout << "SMLAL instruction test failed." << std::endl;
         std::cout << "Expected R2: " << std::hex << expected_resultLo << ", Got: " << cpu.getRegister(2) << std::endl;
         std::cout << "Expected R1: " << std::hex << expected_resultHi << ", Got: " << cpu.getRegister(1) << std::endl;
+    }
+}
+
+void testCMP(CPU& cpu) {
+    cpu.setRegister(1, 0xA); // Set R1 to 10
+    uint32_t instruction = 0xE3510005; // Example CMP instruction: CMP R1, #5
+    executeCMP(cpu, instruction);
+
+    // Check if the flags are set correctly (10 - 5)
+    uint32_t expected_flags = 0x20000000; // Only the C flag should be set
+    if (cpu.getFlags() == expected_flags) {
+        std::cout << "CMP instruction test passed." << std::endl;
+    } else {
+        std::cout << "CMP instruction test failed." << std::endl;
+        std::cout << "Expected flags: " << std::hex << expected_flags << ", Got: " << cpu.getFlags() << std::endl;
+    }
+}
+
+void testCMN(CPU& cpu) {
+    cpu.setRegister(1, 0xA); // Set R1 to 10
+    uint32_t instruction = 0xE3710005; // Example CMN instruction: CMN R1, #5
+    executeCMN(cpu, instruction);
+
+    // Check if the flags are set correctly (10 + 5)
+    uint32_t expected_flags = 0x20000000; // Only the C flag should be set
+    if ((cpu.getCPSR() & 0xF0000000) == expected_flags) {
+        std::cout << "CMN instruction test passed." << std::endl;
+    } else {
+        std::cout << "CMN instruction test failed." << std::endl;
+        std::cout << "Expected flags: " << std::hex << expected_flags << ", Got: " << (cpu.getCPSR() & 0xF0000000) << std::endl;
     }
 }

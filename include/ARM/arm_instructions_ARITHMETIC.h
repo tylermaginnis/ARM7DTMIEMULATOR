@@ -15,4 +15,7 @@ void executeUMULL(class CPU& cpu, uint32_t instruction);
 void executeUMLAL(class CPU& cpu, uint32_t instruction);
 void executeSMULL(class CPU& cpu, uint32_t instruction);
 void executeSMLAL(class CPU& cpu, uint32_t instruction);
+void executeCMP(class CPU& cpu, uint32_t instruction);
+void executeCMN(class CPU& cpu, uint32_t instruction);
+
 #endif // ARM_INSTRUCTIONS_ARITHMETIC_H

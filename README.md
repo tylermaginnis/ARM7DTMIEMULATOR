@@ -299,9 +299,8 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 | `testUMLAL`              | Tests the UMLAL instruction                      | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testSMULL`              | Tests the SMULL instruction                      | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testSMLAL`              | Tests the SMLAL instruction                      | <span style="background-color: #90EE90 !important;">Passed</span> |
-
-
-
+| `testCMP`                | Tests the CMP instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
+| `testCMN`                | Tests the CMN instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
 
 #### ADD Instruction Test
 
@@ -610,6 +609,51 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
   </tr>
 </table>
 
+#### CMP Instruction Test
+
+<table>
+  <tr>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/CMP.svg" alt="CMP Instruction Test" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e3510005`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>Source Register (Rn)</strong>: 1<br>
+      <strong>Immediate Value</strong>: 5<br>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Flags Update</strong>: Only the C flag set<br>
+      <strong>Result</strong>: Test passed
+    </td>
+  </tr>
+</table>
+
+#### CMN Instruction Test
+
+<table>
+  <tr>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/CMN.svg" alt="CMN Instruction Test" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e3710005`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>Source Register (Rn)</strong>: 1<br>
+      <strong>Immediate Value</strong>: 5<br>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Flags Update</strong>: Only the C flag set<br>
+      <strong>Result</strong>: Test passed
+    </td>
+  </tr>
+</table>
 
 Overall, all the tests for the ADD and ADC instructions have passed successfully, indicating that the emulator is functioning correctly for these arithmetic instructions.
 
