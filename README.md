@@ -92,14 +92,14 @@ The following analysis is based on the output of the command-line interface (CLI
 <table>
   <tr>
     <td>
-      <p><strong>Instruction</strong>: `e3a01001`</p>
-      <p><strong>Condition</strong>: Always (e)</p>
-      <p><strong>S bit</strong>: 0</p>
-      <p><strong>Destination Register (Rd)</strong>: 1</p>
-      <p><strong>Operand2 (Oprnd2)</strong>: 1</p>
-      <p><strong>Condition Check</strong>: Passed</p>
-      <p><strong>Register Update</strong>: Register 1 set to 1</p>
-      <p><strong>Result</strong>: Test passed</p>
+      <strong>Instruction</strong>: `e3a01001`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0<br>
+      <strong>Destination Register (Rd)</strong>: 1<br>
+      <strong>Operand2 (Oprnd2)</strong>: 1<br>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: Register 1 set to 1<br>
+      <strong>Result</strong>: Test passed<br>
     </td>
     <td>
       <p align="center">
