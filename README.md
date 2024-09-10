@@ -110,74 +110,158 @@ The following analysis is based on the output of the command-line interface (CLI
 </table>
 
 #### MVN Instruction Test
-- **Instruction**: `e3e01001`
-- **Condition**: Always (e)
-- **S bit**: 0
-- **Destination Register (Rd)**: 1
-- **Operand2 (Oprnd2)**: 1
-- **Condition Check**: Passed
-- **Register Update**: Register 1 set to `0xfffffffe` (bitwise NOT of 1)
-- **Result**: Test passed
+
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e3e01001`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0<br>
+      <strong>Destination Register (Rd)</strong>: 1<br>
+      <strong>Operand2 (Oprnd2)</strong>: 1<br>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: R1 set to 0xfffffffe<br>
+      <strong>Result</strong>: Test passed<br>
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MVN.svg" alt="MVN Instruction Test" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### MRS Instruction Test (CPSR)
-- **Instruction**: `e10f0000`
-- **Condition**: Always (e)
-- **Destination Register (Rd)**: 0
-- **PSR**: CPSR (0)
-- **Condition Check**: Passed
-- **Register Update**: Register 0 set to the value of CPSR (`0x87654321`)
-- **Result**: Test passed
+
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e10f0000`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>Destination Register (Rd)</strong>: 0<br>
+      <strong>PSR</strong>: CPSR (0)<br>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: Register 0 set to the value of CPSR (`0x87654321`)
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MRS.svg" alt="MRS Instruction Test (CPSR)" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### MRS Instruction Test (SPSR)
-- **Instruction**: `e14f0000`
-- **Condition**: Always (e)
-- **Destination Register (Rd)**: 0
-- **PSR**: SPSR (1)
-- **Condition Check**: Passed
-- **Register Update**: Register 0 set to the value of SPSR (`0x12345678`)
-- **Result**: Test passed
+    
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e14f0000`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>Destination Register (Rd)</strong>: 0<br>
+      <strong>PSR</strong>: SPSR (1)<br>
+      <strong>Condition Check</strong>: Passed
+      <strong>Register Update</strong>: Register 0 set to the value of SPSR (`0x12345678`)
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MRS.svg" alt="MRS Instruction Test (SPSR)" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### MSR Instruction Test (CPSR)
-- **Instruction**: `e129f001`
-- **Condition**: Always (e)
-- **Field Mask**: 9
-- **PSR**: CPSR (0)
-- **Source Register (Rm)**: 1
-- **Condition Check**: Passed
-- **Register Update**: CPSR set to the value of Register 1 (`0x87654321`)
-- **Result**: Test passed
+
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e129f001`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>Field Mask</strong>: 9<br>
+      <strong>PSR</strong>: CPSR (0)<br>
+      <strong>Source Register (Rm)</strong>: 1<br>
+      <strong>Condition Check</strong>: Passed
+      <strong>Register Update</strong>: CPSR set to the value of Register 1 (`0x87654321`)
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MSR.svg" alt="MSR Instruction Test (CPSR)" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### MSR Instruction Test (SPSR)
-- **Instruction**: `e169f002`
-- **Condition**: Always (e)
-- **Field Mask**: 9
-- **PSR**: SPSR (1)
-- **Source Register (Rm)**: 2
-- **Condition Check**: Passed
-- **Register Update**: SPSR set to the value of Register 2 (`0x12345678`)
-- **Result**: Test passed
+
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e169f002`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>Field Mask</strong>: 9<br>
+      <strong>PSR</strong>: SPSR (1)<br>
+      <strong>Source Register (Rm)</strong>: 2<br>
+      <strong>Condition Check</strong>: Passed
+      <strong>Register Update</strong>: SPSR set to the value of Register 2 (`0x12345678`)
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MSR.svg" alt="MSR Instruction Test (SPSR)" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### MSR Immediate Instruction Test (CPSR)
-- **Instruction**: `e32ef001`
-- **Condition**: Always (e)
-- **Field Mask**: e
-- **PSR**: CPSR (0)
-- **Immediate Value**: 1
-- **Rotate**: 0
-- **Condition Check**: Passed
-- **Register Update**: CPSR set to `0x17000021` after handling the immediate value
-- **Result**: Test passed
+
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e32ef001`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>Field Mask</strong>: e<br>
+      <strong>PSR</strong>: CPSR (0)<br>
+      <strong>Immediate Value</strong>: 1<br>
+      <strong>Rotate</strong>: 0<br>
+      <strong>Condition Check</strong>: Passed
+      <strong>Register Update</strong>: CPSR set to `0x17000021` after handling the immediate value
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MSRImmediate.svg" alt="MSR Immediate Instruction Test (CPSR)" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### MSR Immediate Instruction Test (SPSR)
-- **Instruction**: `e36ef002`
-- **Condition**: Always (e)
-- **Field Mask**: e
-- **PSR**: SPSR (1)
-- **Immediate Value**: 2
-- **Rotate**: 0
-- **Condition Check**: Passed
-- **Register Update**: SPSR set to `0x22000078` after handling the immediate value
-- **Result**: Test passed
+
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e36ef002`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>Field Mask</strong>: e<br>
+      <strong>PSR</strong>: SPSR (1)<br>    
+      <strong>Immediate Value</strong>: 2<br>
+      <strong>Rotate</strong>: 0<br>
+      <strong>Condition Check</strong>: Passed
+      <strong>Register Update</strong>: SPSR set to `0x22000078` after handling the immediate value
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/MOV/result/MSRImmediate.svg" alt="MSR Immediate Instruction Test (SPSR)" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions have passed successfully, indicating that the emulator is functioning correctly for these instructions.
 
@@ -198,121 +282,239 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 
 
 #### ADD Instruction Test
-- **Instruction**: `e2811003`
-- **Condition**: Always (e)
-- **S bit**: 0
-- **Destination Register (Rd)**: 1
-- **Source Register (Rn)**: 1
-- **Operand2**: 3
-- **Condition Check**: Passed
-- **Register Update**: Register 1 set to 8 (`5 + 3`)
-- **Result**: Test passed
+
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e2811003`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0<br>
+      <strong>Destination Register (Rd)</strong>: 1<br>
+      <strong>Source Register (Rn)</strong>: 1<br>
+      <strong>Operand2</strong>: 3<br>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: Register 1 set to 8 (`5 + 3`)
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/ADD.svg" alt="ADD Instruction Test" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### ADC Instruction Test
-- **Instruction**: `e0a11002`
-- **Condition**: Always (e)
-- **S bit**: 0
-- **Destination Register (Rd)**: 1
-- **Source Register (Rn)**: 1
-- **Source Register (Rm)**: 2
-- **Condition Check**: Passed
-- **Carry Flag**: 1
-- **Register Update**: Register 1 set to 9 (`5 + 3 + 1`)
-- **Result**: Test passed
+
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e0a11002`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0<br>
+      <strong>Destination Register (Rd)</strong>: 1<br>
+      <strong>Source Register (Rn)</strong>: 1<br>
+      <strong>Source Register (Rm)</strong>: 2<br>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Carry Flag</strong>: 1<br>
+      <strong>Register Update</strong>: Register 1 set to 9 (`5 + 3 + 1`)
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/ADC.svg" alt="ADC Instruction Test" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### SUB Instruction Test
-- **Instruction**: `e2411003`
-- **Condition**: Always (e)
-- **S bit**: 0
-- **Destination Register (Rd)**: 1
-- **Source Register (Rn)**: 1
-- **Operand2**: 3
-- **Condition Check**: Passed
-- **Register Update**: Register 1 set to 7 (`10 - 3`)
-- **Result**: Test passed
+
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e2411003`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0<br>
+      <strong>Destination Register (Rd)</strong>: 1<br>
+      <strong>Source Register (Rn)</strong>: 1<br>
+      <strong>Operand2</strong>: 3
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: Register 1 set to 7 (`10 - 3`)
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/SUB.svg" alt="SUB Instruction Test" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### SBC Instruction Test
-- **Instruction**: `e0c11002`
-- **Condition**: Always (e)
-- **S bit**: 0
-- **Destination Register (Rd)**: 1
-- **Source Register (Rn)**: 1
-- **Source Register (Rm)**: 2
-- **Condition Check**: Passed
-- **Carry Flag**: 1
-- **Register Update**: Register 1 set to 7 (`10 - 3 - (1 - 1)`)
-- **Result**: Test passed
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e0c11002`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0<br>
+      <strong>Destination Register (Rd)</strong>: 1<br>
+      <strong>Source Register (Rn)</strong>: 1<br>
+      <strong>Source Register (Rm)</strong>: 2<br>
+      <strong>Condition Check</strong>: Passed
+      <strong>Carry Flag</strong>: 1
+      <strong>Register Update</strong>: Register 1 set to 7 (`10 - 3 - (1 - 1)`)
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/SBC.svg" alt="SBC Instruction Test" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### RSB Instruction Test
-- **Instruction**: `e2611003`
-- **Condition**: Always (e)
-- **S bit**: 0
-- **Destination Register (Rd)**: 1
-- **Source Register (Rn)**: 1
-- **Operand2**: 3
-- **Condition Check**: Passed
-- **Register Update**: Register 1 set to -2 (`3 - 5`)
-- **Result**: Test passed
+
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e2611003`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0<br>
+      <strong>Destination Register (Rd)</strong>: 1<br>
+      <strong>Source Register (Rn)</strong>: 1<br>
+      <strong>Operand2</strong>: 3
+      <strong>Condition Check</strong>: Passed
+      <strong>Register Update</strong>: Register 1 set to -2 (`3 - 5`)
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/RSB.svg" alt="RSB Instruction Test" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### RSC Instruction Test
-- **Instruction**: `e0e11002`
-- **Condition**: Always (e)
-- **S bit**: 0
-- **Destination Register (Rd)**: 1
-- **Source Register (Rn)**: 1
-- **Source Register (Rm)**: 2
-- **Condition Check**: Passed
-- **Carry Flag**: 1
-- **Register Update**: Register 1 set to -3 (`2 - 5 - (1 - 1)`)
-- **Result**: Test passed
+
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e0e11002`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0<br>
+      <strong>Destination Register (Rd)</strong>: 1<br>
+      <strong>Source Register (Rn)</strong>: 1<br>
+      <strong>Source Register (Rm)**: 2
+      <strong>Condition Check</strong>: Passed
+      <strong>Carry Flag</strong>: 1
+      <strong>Register Update</strong>: Register 1 set to -3 (`2 - 5 - (1 - 1)`)
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/RSC.svg" alt="RSC Instruction Test" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### MUL Instruction Test
-- **Instruction**: `e0010291`
-- **Condition**: Always (e)
-- **S bit**: 0
-- **Destination Register (Rd)**: 1
-- **Source Register (Rm)**: 1
-- **Source Register (Rs)**: 2
-- **Condition Check**: Passed
-- **Register Update**: Register 1 set to 15 (`5 * 3`)
-- **Result**: Test passed
+
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e0010291`
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0<br>
+      <strong>Destination Register (Rd)</strong>: 1<br>
+      <strong>Source Register (Rm)</strong>: 1<br>
+      <strong>Source Register (Rs)**: 2
+      <strong>Condition Check</strong>: Passed
+      <strong>Register Update</strong>: Register 1 set to 15 (`5 * 3`)
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/MUL.svg" alt="MUL Instruction Test" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### MLA Instruction Test
-- **Instruction**: `e0211392`
-- **Condition**: Always (e)
-- **S bit**: 0
-- **Destination Register (Rd)**: 1
-- **Source Register (Rm)**: 2
-- **Source Register (Rs)**: 3
-- **Source Register (Rn)**: 1
-- **Condition Check**: Passed
-- **Register Update**: Register 1 set to 35 (`5 * 3 + 10`)
-- **Result**: Test passed
+
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e0211392`
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0<br>
+      <strong>Destination Register (Rd)**: 1
+      <strong>Source Register (Rm)**: 2
+      <strong>Source Register (Rs)**: 3
+      <strong>Source Register (Rn)**: 1
+      <strong>Condition Check</strong>: Passed
+      <strong>Register Update</strong>: Register 1 set to 35 (`5 * 3 + 10`)
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/MLA.svg" alt="MLA Instruction Test" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### UMULL Instruction Test
-- **Instruction**: `e0830493`
-- **Condition**: Always (e)
-- **S bit**: 0
-- **Destination Register Low (RdLo)**: 0
-- **Destination Register High (RdHi)**: 3
-- **Source Register (Rm)**: 3
-- **Source Register (Rs)**: 4
-- **Condition Check**: Passed
-- **Register Update**: Register 0 set to `0xFFFFFFF8`, Register 3 set to `0x7`
-- **Result**: Test passed
+
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e0830493`
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0<br>
+      <strong>Destination Register Low (RdLo)</strong>: 0<br>
+      <strong>Destination Register High (RdHi)</strong>: 3<br>
+      <strong>Source Register (Rm)**: 3
+      <strong>Source Register (Rs)**: 4
+      <strong>Condition Check</strong>: Passed
+      <strong>Register Update</strong>: Register 0 set to `0xFFFFFFF8`, Register 3 set to `0x7`
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/UMULL.svg" alt="UMULL Instruction Test" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 #### UMLAL Instruction Test
-- **Instruction**: `e0e12392`
-- **Condition**: Always (e)
-- **S bit**: 0
-- **Destination Register Low (RdLo)**: 2
-- **Destination Register High (RdHi)**: 1
-- **Source Register (Rm)**: 2
-- **Source Register (Rs)**: 3
-- **Condition Check**: Passed
-- **Register Update**: Register 2 set to `0xDB97530E`, Register 1 set to `0x12345677`
-- **Result**: Test passed
 
+<table>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e0e12392`
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0
+      <strong>Destination Register Low (RdLo)</strong>: 2
+      <strong>Destination Register High (RdHi)</strong>: 1
+      <strong>Source Register (Rm)</strong>: 2
+      <strong>Source Register (Rs)</strong>: 3
+      <strong>Condition Check</strong>: Passed
+      <strong>Register Update</strong>: Register 2 set to `0xDB97530E`, Register 1 set to `0x12345677`
+      <strong>Result</strong>: Test passed
+    </td>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/UMLAL.svg" alt="UMLAL Instruction Test" />
+      </p>
+    </td>
+  </tr>
+</table>
 
 
 Overall, all the tests for the ADD and ADC instructions have passed successfully, indicating that the emulator is functioning correctly for these arithmetic instructions.
