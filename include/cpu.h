@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include "ARM/arm_instructions_MOV.h"
+#include "ARM/arm_instructions_ARITHMETIC.h"
 
 enum class Field {
     CONTROL,
@@ -83,6 +84,8 @@ private:
 
     uint32_t banked_r13_und;
     uint32_t banked_r14_und;
+
+    
 
     Mode currentMode;
 };

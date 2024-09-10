@@ -62,7 +62,7 @@ This will execute a series of predefined tests to ensure the emulator is functio
 - **CPSR**: Current Program Status Register - Holds the current state of the processor, including condition flags, interrupt status, and processor mode.
 - **SPSR**: Saved Program Status Register - Holds the saved state of the CPSR when an exception occurs, allowing the processor to return to its previous state after handling the exception.
 
-## Test Cases
+## MOV Test Cases
 
 | Test Case                | Description                                      | Result       |
 |--------------------------|--------------------------------------------------|--------------|
@@ -71,6 +71,7 @@ This will execute a series of predefined tests to ensure the emulator is functio
 | `testMRS`                | Tests the MRS instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testMSR`                | Tests the MSR instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testMSRImmediate`       | Tests the MSRImmediate instruction               | <span style="background-color: #90EE90 !important;">Passed</span> |
+
 
 ### Analysis of Test Results
 
@@ -157,6 +158,39 @@ The following analysis is based on the output of the command-line interface (CLI
 - **Result**: Test passed
 
 Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions have passed successfully, indicating that the emulator is functioning correctly for these instructions.
+
+## ARITHMETIC Test Cases
+
+| Test Case                | Description                                      | Result       |
+|--------------------------|--------------------------------------------------|--------------|
+| `testADD`                | Tests the ADD instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
+| `testADC`                | Tests the ADC instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
+
+#### ADD Instruction Test
+- **Instruction**: `e2811003`
+- **Condition**: Always (e)
+- **S bit**: 0
+- **Destination Register (Rd)**: 1
+- **Source Register (Rn)**: 1
+- **Operand2**: 3
+- **Condition Check**: Passed
+- **Register Update**: Register 1 set to 8 (`5 + 3`)
+- **Result**: Test passed
+
+#### ADC Instruction Test
+- **Instruction**: `e0a11002`
+- **Condition**: Always (e)
+- **S bit**: 0
+- **Destination Register (Rd)**: 1
+- **Source Register (Rn)**: 1
+- **Source Register (Rm)**: 2
+- **Condition Check**: Passed
+- **Carry Flag**: 1
+- **Register Update**: Register 1 set to 9 (`5 + 3 + 1`)
+- **Result**: Test passed
+
+Overall, all the tests for the ADD and ADC instructions have passed successfully, indicating that the emulator is functioning correctly for these arithmetic instructions.
+
 
 ### Running the Emulator
 

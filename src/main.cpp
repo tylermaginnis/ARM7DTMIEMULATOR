@@ -2,12 +2,19 @@
 #include <string>
 #include "cpu.h"
 #include "../include/ARM/arm_instructions_MOV.h"
+#include "../include/ARM/arm_instructions_ARITHMETIC.h"
 
+// MOV tests
 void testMOV(CPU& cpu);
 void testMVN(CPU& cpu); 
 void testMRS(CPU& cpu);
 void testMSR(CPU& cpu);
 void testMSRImmediate(CPU& cpu);
+
+// ARITHMETIC tests
+void testADD(CPU& cpu);
+void testADC(CPU& cpu);
+
 void testSwitchMode(CPU& cpu);
 
 int main(int argc, char* argv[]) {
@@ -16,6 +23,7 @@ int main(int argc, char* argv[]) {
     if (argc > 1) {
         std::string arg = argv[1];
         if (arg == "test") {
+            // MOV tests
             testMOV(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             testMVN(cpu);
@@ -25,6 +33,11 @@ int main(int argc, char* argv[]) {
             testMSR(cpu); 
             std::cout << "-----------------------------------------" << std::endl;
             testMSRImmediate(cpu);
+            std::cout << "-----------------------------------------" << std::endl;
+            // ARITHMETIC TESTS
+            testADD(cpu);
+            std::cout << "-----------------------------------------" << std::endl;
+            testADC(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             //testSwitchMode(cpu);
             //std::cout << "-----------------------------------------" << std::endl;
@@ -163,5 +176,34 @@ void testSwitchMode(CPU& cpu) {
         std::cout << "Switch to FIQ mode test passed." << std::endl;
     } else {
         std::cout << "Switch to FIQ mode test failed." << std::endl;
+    }
+}
+
+void testADD(CPU& cpu) {
+    cpu.setRegister(1, 5); // Set R1 to 5
+    uint32_t instruction = 0xE2811003; // Example ADD instruction: ADD R1, R1, #3
+    executeADD(cpu, instruction);
+
+    // Check if the register R1 is set to 8
+    if (cpu.getRegister(1) == 8) {
+        std::cout << "ADD instruction test passed." << std::endl;
+    } else {
+        std::cout << "ADD instruction test failed." << std::endl;
+    }
+}
+
+void testADC(CPU& cpu) {
+    cpu.setRegister(1, 5); // Set R1 to 5
+    cpu.setRegister(2, 3); // Set R2 to 3
+    cpu.setCPSR(0x20000000, 0xFFFFFFFF); // Set carry flag in CPSR
+
+    uint32_t instruction = 0xE0A11002; // Correct ADC instruction: ADC R1, R1, R2
+    executeADC(cpu, instruction);
+
+    // Check if the register R1 is set to 9 (5 + 3 + 1)
+    if (cpu.getRegister(1) == 9) {
+        std::cout << "ADC instruction test passed." << std::endl;
+    } else {
+        std::cout << "ADC instruction test failed." << std::endl;
     }
 }
