@@ -16,6 +16,8 @@ void testADD(CPU& cpu);
 void testADC(CPU& cpu);
 void testSUB(CPU& cpu);
 void testSBC(CPU& cpu);
+void testRSB(CPU& cpu);
+void testRSC(CPU& cpu);
 
 void testSwitchMode(CPU& cpu);
 
@@ -44,6 +46,10 @@ int main(int argc, char* argv[]) {
             testSUB(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             testSBC(cpu);
+            std::cout << "-----------------------------------------" << std::endl;
+            testRSB(cpu);
+            std::cout << "-----------------------------------------" << std::endl;
+            testRSC(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             //testSwitchMode(cpu);
             //std::cout << "-----------------------------------------" << std::endl;
@@ -240,5 +246,32 @@ void testSBC(CPU& cpu) {
         std::cout << "SBC instruction test passed." << std::endl;
     } else {
         std::cout << "SBC instruction test failed." << std::endl;
+    }
+}
+
+void testRSB(CPU& cpu) {
+    cpu.setRegister(1, 5); // Set R1 to 5
+    uint32_t instruction = 0xE2611003; // Example RSB instruction: RSB R1, R1, #3
+    executeRSB(cpu, instruction);
+
+    // Check if the register R1 is set to -2 (3 - 5)
+    if (cpu.getRegister(1) == static_cast<uint32_t>(-2)) {
+        std::cout << "RSB instruction test passed." << std::endl;
+    } else {
+        std::cout << "RSB instruction test failed." << std::endl;
+    }
+}
+
+void testRSC(CPU& cpu) {
+    cpu.setRegister(1, 5); // Set R1 to 5
+    cpu.setCPSR(0x20000000, 0xFFFFFFFF); // Set carry flag in CPSR
+    uint32_t instruction = 0xE0E11002; // Example RSC instruction: RSC R1, R1, R2
+    executeRSC(cpu, instruction);
+
+    // Check if the register R1 is set to -3 (2 - 5 - (1 - 1))
+    if (cpu.getRegister(1) == static_cast<uint32_t>(-3)) {
+        std::cout << "RSC instruction test passed." << std::endl;
+    } else {
+        std::cout << "RSC instruction test failed." << std::endl;
     }
 }

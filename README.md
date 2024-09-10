@@ -167,6 +167,8 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 | `testADC`                | Tests the ADC instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testSUB`                | Tests the SUB instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testSBC`                | Tests the SBC instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
+| `testRSB`                | Tests the RSB instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
+| `testRSC`                | Tests the RSC instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
 
 #### ADD Instruction Test
 - **Instruction**: `e2811003`
@@ -212,6 +214,29 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 - **Condition Check**: Passed
 - **Carry Flag**: 1
 - **Register Update**: Register 1 set to 7 (`10 - 3 - (1 - 1)`)
+- **Result**: Test passed
+
+#### RSB Instruction Test
+- **Instruction**: `e2611003`
+- **Condition**: Always (e)
+- **S bit**: 0
+- **Destination Register (Rd)**: 1
+- **Source Register (Rn)**: 1
+- **Operand2**: 3
+- **Condition Check**: Passed
+- **Register Update**: Register 1 set to -2 (`3 - 5`)
+- **Result**: Test passed
+
+#### RSC Instruction Test
+- **Instruction**: `e0e11002`
+- **Condition**: Always (e)
+- **S bit**: 0
+- **Destination Register (Rd)**: 1
+- **Source Register (Rn)**: 1
+- **Source Register (Rm)**: 2
+- **Condition Check**: Passed
+- **Carry Flag**: 1
+- **Register Update**: Register 1 set to -3 (`2 - 5 - (1 - 1)`)
 - **Result**: Test passed
 
 
