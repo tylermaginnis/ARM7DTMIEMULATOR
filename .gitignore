@@ -1,0 +1,40 @@
+# C++ object files, static and dynamic libs
+*.o
+*.a
+*.so
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.dll
+*.dylib
+
+# Executables
+*.exe
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+build/
+
+# Other generated files
+compile_commands.json
+Testing/
+CTestTestfile.cmake
+*.dir/
+
+# User-specific files
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+*.log
+*.user
+*.DS_Store
+*.VC.db
+*.VC.opendb
