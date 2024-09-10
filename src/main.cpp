@@ -18,6 +18,8 @@ void testSUB(CPU& cpu);
 void testSBC(CPU& cpu);
 void testRSB(CPU& cpu);
 void testRSC(CPU& cpu);
+void testMUL(CPU& cpu);
+void testMLA(CPU& cpu);
 
 void testSwitchMode(CPU& cpu);
 
@@ -50,6 +52,10 @@ int main(int argc, char* argv[]) {
             testRSB(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             testRSC(cpu);
+            std::cout << "-----------------------------------------" << std::endl;
+            testMUL(cpu);
+            std::cout << "-----------------------------------------" << std::endl;
+            testMLA(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             //testSwitchMode(cpu);
             //std::cout << "-----------------------------------------" << std::endl;
@@ -273,5 +279,35 @@ void testRSC(CPU& cpu) {
         std::cout << "RSC instruction test passed." << std::endl;
     } else {
         std::cout << "RSC instruction test failed." << std::endl;
+    }
+}
+
+void testMUL(CPU& cpu) {
+    cpu.setRegister(1, 5); // Set R1 to 5
+    cpu.setRegister(2, 3); // Set R2 to 3
+    uint32_t instruction = 0xE0010291; // Example MUL instruction: MUL R1, R2, R1
+    executeMUL(cpu, instruction);
+
+    // Check if the register R1 is set to 15 (5 * 3)
+    if (cpu.getRegister(1) == 15) {
+        std::cout << "MUL instruction test passed." << std::endl;
+    } else {
+        std::cout << "MUL instruction test failed." << std::endl;
+    }
+}
+
+void testMLA(CPU& cpu) {
+    cpu.setRegister(1, 5); // Set R1 to 5
+    cpu.setRegister(2, 3); // Set R2 to 3
+    cpu.setRegister(3, 10); // Set R3 to 10
+    uint32_t instruction = 0xE0211392; // Example MLA instruction: MLA R1, R2, R3, R1
+    executeMLA(cpu, instruction);
+
+    // Check if the register R1 is set to 25 (5 * 3 + 10)
+    std::cout << "R1: " << (cpu.getRegister(1) == 35) << std::endl;
+    if (cpu.getRegister(1) == 35) {
+        std::cout << "MLA instruction test passed." << std::endl;
+    } else {
+        std::cout << "MLA instruction test failed." << std::endl;
     }
 }

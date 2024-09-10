@@ -205,3 +205,90 @@ void executeRSC(CPU& cpu, uint32_t instruction) {
 
     std::cout << "Register " << Rd << " set to " << result << std::endl;
 }
+
+void executeMUL(CPU& cpu, uint32_t instruction) {
+    // Extract condition, S bit, Rd, Rm, and Rs from the instruction
+    uint32_t cond = (instruction >> 28) & 0xF;
+    uint32_t S = (instruction >> 20) & 0x1;
+    uint32_t Rd = (instruction >> 16) & 0xF;
+    uint32_t Rm = instruction & 0xF;
+    uint32_t Rs = (instruction >> 8) & 0xF;
+
+    // Debug prints
+    std::cout << "Instruction: " << std::hex << instruction << std::endl;
+    std::cout << "Condition: " << cond << std::endl;
+    std::cout << "S bit: " << S << std::endl;
+    std::cout << "Rd: " << Rd << std::endl;
+    std::cout << "Rm: " << Rm << std::endl;
+    std::cout << "Rs: " << Rs << std::endl;
+
+    // Check condition
+    if (!cpu.checkCondition(static_cast<Condition>(cond))) {
+        std::cout << "Condition failed, do not execute" << std::endl;
+        return;
+    }
+
+    // Execute MUL
+    uint32_t result = cpu.getRegister(Rm) * cpu.getRegister(Rs);
+    cpu.setRegister(Rd, result);
+
+    // Update flags if S bit is set
+    if (S) {
+        cpu.updateFlags(result);
+        std::cout << "Flags updated with " << result << std::endl;
+    }
+
+    // Debug print
+    std::cout << "Register " << Rd << " set to " << result << std::endl;
+}
+
+void executeMLA(CPU& cpu, uint32_t instruction) {
+    // Extract condition, S bit, Rd, Rm, Rs, and Rn from the instruction
+    uint32_t cond = (instruction >> 28) & 0xF;
+    uint32_t S = (instruction >> 20) & 0x1;
+    uint32_t Rd = (instruction >> 16) & 0xF;
+    uint32_t Rm = instruction & 0xF;
+    uint32_t Rs = (instruction >> 8) & 0xF;
+    uint32_t Rn = (instruction >> 12) & 0xF;
+
+    // Debug prints
+    std::cout << "Instruction: " << std::hex << instruction << std::endl;
+    std::cout << "Condition: " << cond << std::endl;
+    std::cout << "S bit: " << S << std::endl;
+    std::cout << "Rd: " << Rd << std::endl;
+    std::cout << "Rm: " << Rm << std::endl;
+    std::cout << "Rs: " << Rs << std::endl;
+    std::cout << "Rn: " << Rn << std::endl;
+
+    // Check condition
+    if (!cpu.checkCondition(static_cast<Condition>(cond))) {
+        std::cout << "Condition failed, do not execute" << std::endl;
+        return;
+    }
+
+    // Fetch register values
+    uint32_t Rm_val = cpu.getRegister(Rm);
+    uint32_t Rs_val = cpu.getRegister(Rs);
+    uint32_t Rn_val = cpu.getRegister(Rn);
+
+    // Debug prints for register values
+    std::cout << "Rm value: " << std::dec << Rm_val << std::endl;
+    std::cout << "Rs value: " << std::dec << Rs_val << std::endl;
+    std::cout << "Rn value: " << std::dec << Rn_val << std::endl;
+
+    // Execute MLA
+    uint32_t intermediate_result = Rm_val * Rs_val;
+    uint32_t result = intermediate_result + Rn_val;
+    std::cout << "Intermediate result (Rm_val * Rs_val): " << std::dec << intermediate_result << std::endl;
+    std::cout << "Final result (intermediate_result + Rn_val): " << std::dec << result << std::endl;
+    cpu.setRegister(Rd, result);
+
+    // Update flags if S bit is set
+    if (S) {
+        cpu.updateFlags(result);
+        std::cout << "Flags updated with " << result << std::endl;
+    }
+
+    // Debug print
+    std::cout << "Register " << Rd << " set to " << std::dec << result << std::endl;
+}
