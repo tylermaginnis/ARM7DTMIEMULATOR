@@ -14,6 +14,8 @@ void testMSRImmediate(CPU& cpu);
 // ARITHMETIC tests
 void testADD(CPU& cpu);
 void testADC(CPU& cpu);
+void testSUB(CPU& cpu);
+void testSBC(CPU& cpu);
 
 void testSwitchMode(CPU& cpu);
 
@@ -38,6 +40,10 @@ int main(int argc, char* argv[]) {
             testADD(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             testADC(cpu);
+            std::cout << "-----------------------------------------" << std::endl;
+            testSUB(cpu);
+            std::cout << "-----------------------------------------" << std::endl;
+            testSBC(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             //testSwitchMode(cpu);
             //std::cout << "-----------------------------------------" << std::endl;
@@ -205,5 +211,34 @@ void testADC(CPU& cpu) {
         std::cout << "ADC instruction test passed." << std::endl;
     } else {
         std::cout << "ADC instruction test failed." << std::endl;
+    }
+}
+
+void testSUB(CPU& cpu) {
+    cpu.setRegister(1, 10); // Set R1 to 10
+    uint32_t instruction = 0xE2411003; // Example SUB instruction: SUB R1, R1, #3
+    executeSUB(cpu, instruction);
+
+    // Check if the register R1 is set to 7
+    if (cpu.getRegister(1) == 7) {
+        std::cout << "SUB instruction test passed." << std::endl;
+    } else {
+        std::cout << "SUB instruction test failed." << std::endl;
+    }
+}
+
+void testSBC(CPU& cpu) {
+    cpu.setRegister(1, 10); // Set R1 to 10
+    cpu.setRegister(2, 3); // Set R2 to 3
+    cpu.setCPSR(0x20000000, 0xFFFFFFFF); // Set carry flag in CPSR
+
+    uint32_t instruction = 0xE0C11002; // Correct SBC instruction: SBC R1, R1, R2
+    executeSBC(cpu, instruction);
+
+    // Check if the register R1 is set to 7 (10 - 3 - (1 - 1))
+    if (cpu.getRegister(1) == 7) {
+        std::cout << "SBC instruction test passed." << std::endl;
+    } else {
+        std::cout << "SBC instruction test failed." << std::endl;
     }
 }

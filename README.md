@@ -165,6 +165,8 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 |--------------------------|--------------------------------------------------|--------------|
 | `testADD`                | Tests the ADD instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testADC`                | Tests the ADC instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
+| `testSUB`                | Tests the SUB instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
+| `testSBC`                | Tests the SBC instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
 
 #### ADD Instruction Test
 - **Instruction**: `e2811003`
@@ -188,6 +190,30 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 - **Carry Flag**: 1
 - **Register Update**: Register 1 set to 9 (`5 + 3 + 1`)
 - **Result**: Test passed
+
+#### SUB Instruction Test
+- **Instruction**: `e2411003`
+- **Condition**: Always (e)
+- **S bit**: 0
+- **Destination Register (Rd)**: 1
+- **Source Register (Rn)**: 1
+- **Operand2**: 3
+- **Condition Check**: Passed
+- **Register Update**: Register 1 set to 7 (`10 - 3`)
+- **Result**: Test passed
+
+#### SBC Instruction Test
+- **Instruction**: `e0c11002`
+- **Condition**: Always (e)
+- **S bit**: 0
+- **Destination Register (Rd)**: 1
+- **Source Register (Rn)**: 1
+- **Source Register (Rm)**: 2
+- **Condition Check**: Passed
+- **Carry Flag**: 1
+- **Register Update**: Register 1 set to 7 (`10 - 3 - (1 - 1)`)
+- **Result**: Test passed
+
 
 Overall, all the tests for the ADD and ADC instructions have passed successfully, indicating that the emulator is functioning correctly for these arithmetic instructions.
 
