@@ -98,7 +98,7 @@ The following analysis is based on the output of the command-line interface (CLI
       <strong>Destination Register (Rd)</strong>: 1<br>
       <strong>Operand2 (Oprnd2)</strong>: 1<br>
       <strong>Condition Check</strong>: Passed<br>
-      <strong>Register Update</strong>: Register 1 set to 1<br>
+      <strong>Register Update</strong>: R1 set to 1<br>
       <strong>Result</strong>: Test passed<br>
     </td>
     <td>
