@@ -1,6 +1,6 @@
 # ARM7TDMI Emulator
 
-This project is an emulator for the ARM7TDMI processor, written in C++. It includes implementations for various ARM instructions and a simple CPU model.
+This project is an emulator for the ARM7TDMI processor, written in C++. It includes implementations for various ARM instructions and a CPU model.
 
 ## Features
 
