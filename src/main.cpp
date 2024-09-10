@@ -20,6 +20,8 @@ void testRSB(CPU& cpu);
 void testRSC(CPU& cpu);
 void testMUL(CPU& cpu);
 void testMLA(CPU& cpu);
+void testUMULL(CPU& cpu);
+void testUMLAL(CPU& cpu);
 
 void testSwitchMode(CPU& cpu);
 
@@ -56,6 +58,10 @@ int main(int argc, char* argv[]) {
             testMUL(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             testMLA(cpu);
+            std::cout << "-----------------------------------------" << std::endl;
+            testUMULL(cpu);
+            std::cout << "-----------------------------------------" << std::endl;
+            testUMLAL(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             //testSwitchMode(cpu);
             //std::cout << "-----------------------------------------" << std::endl;
@@ -309,5 +315,47 @@ void testMLA(CPU& cpu) {
         std::cout << "MLA instruction test passed." << std::endl;
     } else {
         std::cout << "MLA instruction test failed." << std::endl;
+    }
+}
+
+void testUMULL(CPU& cpu) {
+    cpu.setRegister(3, 0xA); // Set R3 to 10
+    cpu.setRegister(4, 0xCCCCCCCC); // Set R4 to a large value
+
+    uint32_t instruction = 0xE0830493; // Example UMULL instruction: UMULL R0, R3, R3, R4
+    executeUMULL(cpu, instruction);
+
+    // Check if the registers R0 and R3 are set correctly
+    uint64_t expected_result = static_cast<uint64_t>(0xA) * static_cast<uint64_t>(0xCCCCCCCC);
+    uint32_t expected_resultLo = static_cast<uint32_t>(expected_result & 0xFFFFFFFF);
+    uint32_t expected_resultHi = static_cast<uint32_t>((expected_result >> 32) & 0xFFFFFFFF);
+
+    if (cpu.getRegister(0) == expected_resultLo && cpu.getRegister(3) == expected_resultHi) {
+        std::cout << "UMULL instruction test passed." << std::endl;
+    } else {
+        std::cout << "UMULL instruction test failed." << std::endl;
+    }
+}
+
+void testUMLAL(CPU& cpu) {
+    cpu.setRegister(1, 0xFFFFFFFF); // Set R1 to 0xFFFFFFFF
+    cpu.setRegister(2, 0xFFFFFFFE); // Set R2 to 0xFFFFFFFE
+    cpu.setRegister(3, 0x12345678); // Set R3 to 0x12345678
+    cpu.setRegister(4, 0x9ABCDEF0); // Set R4 to 0x9ABCDEF0
+
+    uint32_t instruction = 0xE0E12392; // Example UMLAL instruction: UMLAL R2, R1, R2, R3
+    executeUMLAL(cpu, instruction);
+
+    // Check if the registers R2 and R1 are set correctly
+    uint64_t initial_value = (static_cast<uint64_t>(0xFFFFFFFF) << 32) | 0xFFFFFFFE;
+    uint64_t multiplication_result = static_cast<uint64_t>(0xFFFFFFFE) * static_cast<uint64_t>(0x12345678);
+    uint64_t expected_result = initial_value + multiplication_result;
+    uint32_t expected_resultLo = static_cast<uint32_t>(expected_result & 0xFFFFFFFF);
+    uint32_t expected_resultHi = static_cast<uint32_t>((expected_result >> 32) & 0xFFFFFFFF);
+
+    if (cpu.getRegister(2) == expected_resultLo && cpu.getRegister(1) == expected_resultHi) {
+        std::cout << "UMLAL instruction test passed." << std::endl;
+    } else {
+        std::cout << "UMLAL instruction test failed." << std::endl;
     }
 }

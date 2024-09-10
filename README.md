@@ -69,6 +69,8 @@ This will execute a series of predefined tests to ensure the emulator is functio
 - **RSC**: Reverse Subtract with Carry - Subtracts a register from another register, including the carry flag, and stores the result in a destination register.
 - **MUL**: Multiply - Multiplies two registers and stores the result in a destination register.
 - **MLA**: Multiply and Add - Multiplies two registers, adds a third register, and stores the result in a destination register.
+- **UMULL**: Unsigned Multiply Long - Multiplies two registers and stores the 64-bit result in two consecutive registers.
+- **UMLAL**: Unsigned Multiply Long Accumulate - Multiplies two registers, adds the result to a third register, and stores the 64-bit result in two consecutive registers.
 
 ## MOV Test Cases
 
@@ -179,6 +181,9 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 | `testRSC`                | Tests the RSC instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testMUL`                | Tests the MUL instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testMLA`                | Tests the MLA instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
+| `testUMULL`              | Tests the UMULL instruction                      | <span style="background-color: #90EE90 !important;">Passed</span> |
+| `testUMLAL`              | Tests the UMLAL instruction                      | <span style="background-color: #90EE90 !important;">Passed</span> |
+
 
 #### ADD Instruction Test
 - **Instruction**: `e2811003`
@@ -270,6 +275,30 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 - **Source Register (Rn)**: 1
 - **Condition Check**: Passed
 - **Register Update**: Register 1 set to 35 (`5 * 3 + 10`)
+- **Result**: Test passed
+
+#### UMULL Instruction Test
+- **Instruction**: `e0830493`
+- **Condition**: Always (e)
+- **S bit**: 0
+- **Destination Register Low (RdLo)**: 0
+- **Destination Register High (RdHi)**: 3
+- **Source Register (Rm)**: 3
+- **Source Register (Rs)**: 4
+- **Condition Check**: Passed
+- **Register Update**: Register 0 set to `0xFFFFFFF8`, Register 3 set to `0x7`
+- **Result**: Test passed
+
+#### UMLAL Instruction Test
+- **Instruction**: `e0e12392`
+- **Condition**: Always (e)
+- **S bit**: 0
+- **Destination Register Low (RdLo)**: 2
+- **Destination Register High (RdHi)**: 1
+- **Source Register (Rm)**: 2
+- **Source Register (Rs)**: 3
+- **Condition Check**: Passed
+- **Register Update**: Register 2 set to `0xDB97530E`, Register 1 set to `0x12345677`
 - **Result**: Test passed
 
 

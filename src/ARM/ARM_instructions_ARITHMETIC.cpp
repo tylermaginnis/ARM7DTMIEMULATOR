@@ -292,3 +292,97 @@ void executeMLA(CPU& cpu, uint32_t instruction) {
     // Debug print
     std::cout << "Register " << Rd << " set to " << std::dec << result << std::endl;
 }
+
+void executeUMULL(CPU& cpu, uint32_t instruction) {
+    uint32_t cond = (instruction >> 28) & 0xF;
+    uint32_t S = (instruction >> 20) & 0x1;
+    uint32_t RdLo = (instruction >> 12) & 0xF;
+    uint32_t RdHi = (instruction >> 16) & 0xF;
+    uint32_t Rm = instruction & 0xF;
+    uint32_t Rs = (instruction >> 8) & 0xF;
+
+    std::cout << "Instruction: " << std::hex << instruction << std::endl;
+    std::cout << "Condition: " << cond << std::endl;
+    std::cout << "S bit: " << S << std::endl;
+    std::cout << "RdLo: " << RdLo << std::endl;
+    std::cout << "RdHi: " << RdHi << std::endl;
+    std::cout << "Rm: " << Rm << std::endl;
+    std::cout << "Rs: " << Rs << std::endl;
+
+    if (!cpu.checkCondition(static_cast<Condition>(cond))) {
+        std::cout << "Condition failed, do not execute" << std::endl;
+        return;
+    }
+
+    uint32_t Rm_val = cpu.getRegister(Rm);
+    uint32_t Rs_val = cpu.getRegister(Rs);
+    std::cout << "Rm value: " << Rm_val << ", Rs value: " << Rs_val << std::endl;
+
+    uint64_t result = static_cast<uint64_t>(Rm_val) * static_cast<uint64_t>(Rs_val);
+    uint32_t resultLo = static_cast<uint32_t>(result & 0xFFFFFFFF);
+    uint32_t resultHi = static_cast<uint32_t>((result >> 32) & 0xFFFFFFFF);
+
+    std::cout << "Result: " << std::hex << result << std::endl;
+    std::cout << "ResultLo: " << std::hex << resultLo << std::endl;
+    std::cout << "ResultHi: " << std::hex << resultHi << std::endl;
+
+    cpu.setRegister(RdLo, resultLo);
+    std::cout << "Register " << RdLo << " set to " << std::hex << resultLo << std::endl;
+    cpu.setRegister(RdHi, resultHi);
+    std::cout << "Register " << RdHi << " set to " << std::hex << resultHi << std::endl;
+
+    if (S) {
+        cpu.updateFlags(resultLo);
+        std::cout << "Flags updated with " << std::hex << resultLo << std::endl;
+    }
+}
+
+
+void executeUMLAL(CPU& cpu, uint32_t instruction) {
+    uint32_t cond = (instruction >> 28) & 0xF;
+    uint32_t S = (instruction >> 20) & 0x1;
+    uint32_t RdLo = (instruction >> 12) & 0xF;
+    uint32_t RdHi = (instruction >> 16) & 0xF;
+    uint32_t Rm = instruction & 0xF;
+    uint32_t Rs = (instruction >> 8) & 0xF;
+
+    std::cout << "Instruction: " << std::hex << instruction << std::endl;
+    std::cout << "Condition: " << cond << std::endl;
+    std::cout << "S bit: " << S << std::endl;
+    std::cout << "RdLo: " << RdLo << std::endl;
+    std::cout << "RdHi: " << RdHi << std::endl;
+    std::cout << "Rm: " << Rm << std::endl;
+    std::cout << "Rs: " << Rs << std::endl;
+
+    if (!cpu.checkCondition(static_cast<Condition>(cond))) {
+        std::cout << "Condition failed, do not execute" << std::endl;
+        return;
+    }
+
+    uint32_t Rm_val = cpu.getRegister(Rm);
+    uint32_t Rs_val = cpu.getRegister(Rs);
+    uint64_t Rd_val = (static_cast<uint64_t>(cpu.getRegister(RdHi)) << 32) | cpu.getRegister(RdLo);
+    std::cout << "Rm value: " << Rm_val << ", Rs value: " << Rs_val << std::endl;
+    std::cout << "RdLo initial value: " << cpu.getRegister(RdLo) << std::endl;
+    std::cout << "RdHi initial value: " << cpu.getRegister(RdHi) << std::endl;
+    std::cout << "Combined Rd value: " << Rd_val << std::endl;
+
+    uint64_t result = static_cast<uint64_t>(Rm_val) * static_cast<uint64_t>(Rs_val) + Rd_val;
+    uint32_t resultLo = static_cast<uint32_t>(result & 0xFFFFFFFF);
+    uint32_t resultHi = static_cast<uint32_t>((result >> 32) & 0xFFFFFFFF);
+
+    std::cout << "Multiplication result: " << std::hex << (static_cast<uint64_t>(Rm_val) * static_cast<uint64_t>(Rs_val)) << std::endl;
+    std::cout << "Addition result: " << std::hex << result << std::endl;
+    std::cout << "ResultLo: " << std::hex << resultLo << std::endl;
+    std::cout << "ResultHi: " << std::hex << resultHi << std::endl;
+
+    cpu.setRegister(RdLo, resultLo);
+    std::cout << "Register " << RdLo << " set to " << std::hex << resultLo << std::endl;
+    cpu.setRegister(RdHi, resultHi);
+    std::cout << "Register " << RdHi << " set to " << std::hex << resultHi << std::endl;
+
+    if (S) {
+        cpu.updateFlags(resultLo);
+        std::cout << "Flags updated with " << std::hex << resultLo << std::endl;
+    }
+}
