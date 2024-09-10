@@ -386,3 +386,48 @@ void executeUMLAL(CPU& cpu, uint32_t instruction) {
         std::cout << "Flags updated with " << std::hex << resultLo << std::endl;
     }
 }
+
+void executeSMULL(CPU& cpu, uint32_t instruction) {
+    uint32_t cond = (instruction >> 28) & 0xF;
+    uint32_t S = (instruction >> 20) & 0x1;
+    uint32_t RdLo = (instruction >> 12) & 0xF;
+    uint32_t RdHi = (instruction >> 16) & 0xF;
+    uint32_t Rm = instruction & 0xF;
+    uint32_t Rs = (instruction >> 8) & 0xF;
+
+    // Debug prints
+    std::cout << "Instruction: " << std::hex << instruction << std::endl;
+    std::cout << "Condition: " << cond << std::endl;
+    std::cout << "S bit: " << S << std::endl;
+    std::cout << "RdLo: " << RdLo << std::endl;
+    std::cout << "RdHi: " << RdHi << std::endl;
+    std::cout << "Rm: " << Rm << std::endl;
+    std::cout << "Rs: " << Rs << std::endl;
+
+    // Check condition
+    if (!cpu.checkCondition(static_cast<Condition>(cond))) {
+        std::cout << "Condition failed, do not execute" << std::endl;
+        return;
+    }
+
+    // Execute SMULL
+    int64_t result = static_cast<int64_t>(static_cast<int32_t>(cpu.getRegister(Rm))) * static_cast<int64_t>(cpu.getRegister(Rs));
+    uint32_t resultLo = static_cast<uint32_t>(result & 0xFFFFFFFF);
+    uint32_t resultHi = static_cast<uint32_t>((result >> 32) & 0xFFFFFFFF);
+
+    cpu.setRegister(RdLo, resultLo);
+    cpu.setRegister(RdHi, resultHi);
+
+    // Update flags if S bit is set
+    if (S) {
+        cpu.updateFlags(resultLo);
+        std::cout << "Flags updated with " << std::hex << resultLo << std::endl;
+    }
+
+    // Debug prints
+    std::cout << "Result: " << std::hex << result << std::endl;
+    std::cout << "ResultLo: " << std::hex << resultLo << std::endl;
+    std::cout << "ResultHi: " << std::hex << resultHi << std::endl;
+    std::cout << "Register " << RdLo << " set to " << std::hex << resultLo << std::endl;
+    std::cout << "Register " << RdHi << " set to " << std::hex << resultHi << std::endl;
+}

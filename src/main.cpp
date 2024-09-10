@@ -22,6 +22,7 @@ void testMUL(CPU& cpu);
 void testMLA(CPU& cpu);
 void testUMULL(CPU& cpu);
 void testUMLAL(CPU& cpu);
+void testSMULL(CPU& cpu);
 
 void testSwitchMode(CPU& cpu);
 
@@ -62,6 +63,8 @@ int main(int argc, char* argv[]) {
             testUMULL(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             testUMLAL(cpu);
+            std::cout << "-----------------------------------------" << std::endl;
+            testSMULL(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             //testSwitchMode(cpu);
             //std::cout << "-----------------------------------------" << std::endl;
@@ -357,5 +360,26 @@ void testUMLAL(CPU& cpu) {
         std::cout << "UMLAL instruction test passed." << std::endl;
     } else {
         std::cout << "UMLAL instruction test failed." << std::endl;
+    }
+}
+
+void testSMULL(CPU& cpu) {
+    cpu.setRegister(3, 0xFFFFFFF6); // Set R3 to -10 (in 32-bit two's complement)
+    cpu.setRegister(4, 0xCCCCCCCC); // Set R4 to a large value
+
+    uint32_t instruction = 0xE0830493; // Example SMULL instruction: SMULL R0, R3, R3, R4
+    executeSMULL(cpu, instruction);
+
+    // Check if the registers R0 and R3 are set correctly
+    int64_t expected_result = static_cast<int64_t>(static_cast<int32_t>(0xFFFFFFF6)) * static_cast<int64_t>(0xCCCCCCCC);
+    uint32_t expected_resultLo = static_cast<uint32_t>(expected_result & 0xFFFFFFFF);
+    uint32_t expected_resultHi = static_cast<uint32_t>((expected_result >> 32) & 0xFFFFFFFF);
+
+    if (cpu.getRegister(0) == expected_resultLo && cpu.getRegister(3) == expected_resultHi) {
+        std::cout << "SMULL instruction test passed." << std::endl;
+    } else {
+        std::cout << "SMULL instruction test failed." << std::endl;
+        std::cout << "Expected R0: " << std::hex << expected_resultLo << ", Got: " << cpu.getRegister(0) << std::endl;
+        std::cout << "Expected R3: " << std::hex << expected_resultHi << ", Got: " << cpu.getRegister(3) << std::endl;
     }
 }
