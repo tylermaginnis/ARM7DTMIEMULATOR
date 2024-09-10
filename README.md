@@ -87,19 +87,19 @@ This will execute a series of predefined tests to ensure the emulator is functio
 
 The following analysis is based on the output of the command-line interface (CLI) for each test case:
 
+#### MOV Instruction Test
+
 <table>
   <tr>
     <td>
-      <ul>
-        <li><strong>Instruction</strong>: `e3a01001`</li>
-        <li><strong>Condition</strong>: Always (e)</li>
-        <li><strong>S bit</strong>: 0</li>
-        <li><strong>Destination Register (Rd)</strong>: 1</li>
-        <li><strong>Operand2 (Oprnd2)</strong>: 1</li>
-        <li><strong>Condition Check</strong>: Passed</li>
-        <li><strong>Register Update</strong>: Register 1 set to 1</li>
-        <li><strong>Result</strong>: Test passed</li>
-      </ul>
+      <p><strong>Instruction</strong>: `e3a01001`</p>
+      <p><strong>Condition</strong>: Always (e)</p>
+      <p><strong>S bit</strong>: 0</p>
+      <p><strong>Destination Register (Rd)</strong>: 1</p>
+      <p><strong>Operand2 (Oprnd2)</strong>: 1</p>
+      <p><strong>Condition Check</strong>: Passed</p>
+      <p><strong>Register Update</strong>: Register 1 set to 1</p>
+      <p><strong>Result</strong>: Test passed</p>
     </td>
     <td>
       <p align="center">
