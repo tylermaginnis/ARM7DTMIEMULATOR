@@ -1,0 +1,22 @@
+@startuml
+
+title MRS Instruction Execution
+
+participant "main.cpp" as Main
+participant "ARM_instructions_MOV.cpp" as MOV
+participant "cpu.cpp" as CPU
+
+Main -> MOV: executeMRS(cpu, instruction)
+MOV -> CPU: checkCondition(cond)
+CPU -> CPU: Evaluate condition
+CPU --> MOV: Condition result
+alt Condition Passed
+    MOV -> CPU: getCPSR() / getSPSR()
+    CPU --> MOV: PSR value
+    MOV -> CPU: setRegister(Rd, value)
+    MOV -> Main: Return
+else Condition Failed
+    MOV -> Main: Return
+end
+
+@enduml

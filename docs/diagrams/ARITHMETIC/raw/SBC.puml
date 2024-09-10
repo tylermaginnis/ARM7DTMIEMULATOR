@@ -1,0 +1,29 @@
+@startuml
+
+title SBC Instruction Execution
+
+participant "main.cpp" as Main
+participant "ARM_instructions_ARITHMETIC.cpp" as ARITH
+participant "cpu.cpp" as CPU
+
+Main -> ARITH: executeSBC(cpu, instruction)
+ARITH -> CPU: checkCondition(cond)
+CPU -> CPU: Evaluate condition
+CPU --> ARITH: Condition result
+alt Condition Passed
+    ARITH -> CPU: getCPSR()
+    CPU --> ARITH: CPSR value
+    ARITH -> CPU: getRegister(Rn)
+    CPU --> ARITH: Rn value
+    ARITH -> CPU: getRegister(Rm)
+    CPU --> ARITH: Rm value
+    ARITH -> CPU: setRegister(Rd, Rn - Rm - (1 - carry))
+    alt S bit is set
+        ARITH -> CPU: updateFlags(result)
+    end
+    ARITH -> Main: Return
+else Condition Failed
+    ARITH -> Main: Return
+end
+
+@enduml

@@ -97,6 +97,10 @@ The following analysis is based on the output of the command-line interface (CLI
 - **Register Update**: Register 1 set to 1
 - **Result**: Test passed
 
+<div style="text-align: center;">
+    <img src="docs/diagrams/MOV/result/MOV.svg" alt="MOV Instruction Test" />
+</div>
+
 #### MVN Instruction Test
 - **Instruction**: `e3e01001`
 - **Condition**: Always (e)

@@ -1,0 +1,26 @@
+@startuml
+
+title MSR Instruction Execution
+
+participant "main.cpp" as Main
+participant "ARM_instructions_MOV.cpp" as MOV
+participant "cpu.cpp" as CPU
+
+Main -> MOV: executeMSR(cpu, instruction)
+MOV -> CPU: checkCondition(cond)
+CPU -> CPU: Evaluate condition
+CPU --> MOV: Condition result
+alt Condition Passed
+    MOV -> CPU: getRegister(Rm)
+    CPU --> MOV: Value from Rm
+    alt PSR is CPSR
+        MOV -> CPU: setCPSR(value, fieldMask)
+    else PSR is SPSR
+        MOV -> CPU: setSPSR(value, fieldMask)
+    end
+    MOV -> Main: Return
+else Condition Failed
+    MOV -> Main: Return
+end
+
+@enduml

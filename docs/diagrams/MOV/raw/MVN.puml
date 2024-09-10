@@ -1,0 +1,23 @@
+@startuml
+
+title MVN Instruction Execution
+
+participant "main.cpp" as Main
+participant "ARM_instructions_MOV.cpp" as MOV
+participant "cpu.cpp" as CPU
+
+Main -> MOV: executeMVN(cpu, instruction)
+MOV -> CPU: checkCondition(cond)
+CPU -> CPU: Evaluate condition
+CPU --> MOV: Condition result
+alt Condition Passed
+    MOV -> CPU: setRegister(Rd, ~Oprnd2)
+    alt S bit is set
+        MOV -> CPU: updateFlags(~Oprnd2)
+    end
+    MOV -> Main: Return
+else Condition Failed
+    MOV -> Main: Return
+end
+
+@enduml

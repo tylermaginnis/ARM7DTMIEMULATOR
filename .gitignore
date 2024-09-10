@@ -38,3 +38,6 @@ CTestTestfile.cmake
 *.DS_Store
 *.VC.db
 *.VC.opendb
+
+# doc-gen
+plantuml.jar

@@ -1,0 +1,29 @@
+@startuml
+
+title MLA Instruction Execution
+
+participant "main.cpp" as Main
+participant "ARM_instructions_ARITHMETIC.cpp" as ARITH
+participant "cpu.cpp" as CPU
+
+Main -> ARITH: executeMLA(cpu, instruction)
+ARITH -> CPU: checkCondition(cond)
+CPU -> CPU: Evaluate condition
+CPU --> ARITH: Condition result
+alt Condition Passed
+    ARITH -> CPU: getRegister(Rm)
+    CPU --> ARITH: Rm value
+    ARITH -> CPU: getRegister(Rs)
+    CPU --> ARITH: Rs value
+    ARITH -> CPU: getRegister(Rn)
+    CPU --> ARITH: Rn value
+    ARITH -> CPU: setRegister(Rd, (Rm * Rs) + Rn)
+    alt S bit is set
+        ARITH -> CPU: updateFlags(result)
+    end
+    ARITH -> Main: Return
+else Condition Failed
+    ARITH -> Main: Return
+end
+
+@enduml

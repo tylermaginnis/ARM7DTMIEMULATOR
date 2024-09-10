@@ -1,0 +1,27 @@
+@startuml
+
+title MSRImmediate Instruction Execution
+
+participant "main.cpp" as Main
+participant "ARM_instructions_MOV.cpp" as MOV
+participant "cpu.cpp" as CPU
+
+Main -> MOV: executeMSRImmediate(cpu, instruction)
+MOV -> CPU: checkCondition(cond)
+CPU -> CPU: Evaluate condition
+CPU --> MOV: Condition result
+alt Condition Passed
+    MOV -> CPU: Rotate immediate value
+    MOV -> CPU: getCPSR() / getSPSR()
+    CPU --> MOV: PSR value
+    alt PSR is CPSR
+        MOV -> CPU: setCPSR(value, fieldMask)
+    else PSR is SPSR
+        MOV -> CPU: setSPSR(value, fieldMask)
+    end
+    MOV -> Main: Return
+else Condition Failed
+    MOV -> Main: Return
+end
+
+@enduml
