@@ -62,7 +62,7 @@ This will execute a series of predefined tests to ensure the emulator is functio
 - **CPSR**: Current Program Status Register - Holds the current state of the processor, including condition flags, interrupt status, and processor mode.
 - **SPSR**: Saved Program Status Register - Holds the saved state of the CPSR when an exception occurs, allowing the processor to return to its previous state after handling the exception.
 - **ADD**: Add - Adds two registers or a register and an immediate value, and stores the result in a destination register.
-- **ADC**: Add with Carry - Adds two registers or a register and an immediate value, including the carry flag, and stores the result in a destination register.
+- **ADC**: Add with Carry - Adds two registers and the carry flag, or a register and a shifter operand and the carry flag, and stores the result in a destination register.
 - **SUB**: Subtract - Subtracts two registers or a register and an immediate value, and stores the result in a destination register.
 - **SBC**: Subtract with Carry - Subtracts two registers or a register and an immediate value, including the carry flag, and stores the result in a destination register.
 - **RSB**: Reverse Subtract - Subtracts a register from another register, and stores the result in a destination register.
