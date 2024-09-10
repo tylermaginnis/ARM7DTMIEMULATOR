@@ -431,3 +431,64 @@ void executeSMULL(CPU& cpu, uint32_t instruction) {
     std::cout << "Register " << RdLo << " set to " << std::hex << resultLo << std::endl;
     std::cout << "Register " << RdHi << " set to " << std::hex << resultHi << std::endl;
 }
+
+void executeSMLAL(CPU& cpu, uint32_t instruction) {
+    uint32_t cond = (instruction >> 28) & 0xF;
+    uint32_t S = (instruction >> 20) & 0x1;
+    uint32_t RdLo = (instruction >> 12) & 0xF;
+    uint32_t RdHi = (instruction >> 16) & 0xF;
+    uint32_t Rm = instruction & 0xF;
+    uint32_t Rs = (instruction >> 8) & 0xF;
+
+    // Debug prints
+    std::cout << "Instruction: " << std::hex << instruction << std::endl;
+    std::cout << "Condition: " << cond << std::endl;
+    std::cout << "S bit: " << S << std::endl;
+    std::cout << "RdLo: " << RdLo << std::endl;
+    std::cout << "RdHi: " << RdHi << std::endl;
+    std::cout << "Rm: " << Rm << std::endl;
+    std::cout << "Rs: " << Rs << std::endl;
+
+    // Check condition
+    if (!cpu.checkCondition(static_cast<Condition>(cond))) {
+        std::cout << "Condition failed, do not execute" << std::endl;
+        return;
+    }
+
+    // Fetch register values
+    int32_t Rm_val = static_cast<int32_t>(cpu.getRegister(Rm));
+    int32_t Rs_val = static_cast<int32_t>(cpu.getRegister(Rs));
+    int64_t Rd_val = (static_cast<int64_t>(cpu.getRegister(RdHi)) << 32) | cpu.getRegister(RdLo);
+
+    // Debug prints for register values
+    std::cout << "Rm value: " << Rm_val << std::endl;
+    std::cout << "Rs value: " << Rs_val << std::endl;
+    std::cout << "RdLo initial value: " << cpu.getRegister(RdLo) << std::endl;
+    std::cout << "RdHi initial value: " << cpu.getRegister(RdHi) << std::endl;
+    std::cout << "Combined Rd value: " << Rd_val << std::endl;
+
+    // Execute SMLAL
+    int64_t result = static_cast<int64_t>(Rm_val) * static_cast<int64_t>(Rs_val) + Rd_val;
+    uint32_t resultLo = static_cast<uint32_t>(result & 0xFFFFFFFF);
+    uint32_t resultHi = static_cast<uint32_t>((result >> 32) & 0xFFFFFFFF);
+
+    // Debug prints for results
+    std::cout << "Multiplication result: " << (static_cast<int64_t>(Rm_val) * static_cast<int64_t>(Rs_val)) << std::endl;
+    std::cout << "Addition result: " << result << std::endl;
+    std::cout << "ResultLo: " << resultLo << std::endl;
+    std::cout << "ResultHi: " << resultHi << std::endl;
+
+    // Set the result in the destination registers
+    cpu.setRegister(RdLo, resultLo);
+    cpu.setRegister(RdHi, resultHi);
+
+    // Update flags if S bit is set
+    if (S) {
+        cpu.updateFlags(resultLo);
+        std::cout << "Flags updated with " << resultLo << std::endl;
+    }
+
+    // Debug prints for final register values
+    std::cout << "Register " << RdLo << " set to " << resultLo << std::endl;
+    std::cout << "Register " << RdHi << " set to " << resultHi << std::endl;
+}

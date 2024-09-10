@@ -23,6 +23,7 @@ void testMLA(CPU& cpu);
 void testUMULL(CPU& cpu);
 void testUMLAL(CPU& cpu);
 void testSMULL(CPU& cpu);
+void testSMLAL(CPU& cpu);
 
 void testSwitchMode(CPU& cpu);
 
@@ -65,6 +66,8 @@ int main(int argc, char* argv[]) {
             testUMLAL(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             testSMULL(cpu);
+            std::cout << "-----------------------------------------" << std::endl;
+            testSMLAL(cpu);
             std::cout << "-----------------------------------------" << std::endl;
             //testSwitchMode(cpu);
             //std::cout << "-----------------------------------------" << std::endl;
@@ -381,5 +384,30 @@ void testSMULL(CPU& cpu) {
         std::cout << "SMULL instruction test failed." << std::endl;
         std::cout << "Expected R0: " << std::hex << expected_resultLo << ", Got: " << cpu.getRegister(0) << std::endl;
         std::cout << "Expected R3: " << std::hex << expected_resultHi << ", Got: " << cpu.getRegister(3) << std::endl;
+    }
+}
+
+void testSMLAL(CPU& cpu) {
+    cpu.setRegister(1, 0xFFFFFFFF); // Set R1 to 0xFFFFFFFF
+    cpu.setRegister(2, 0xFFFFFFFE); // Set R2 to 0xFFFFFFFE
+    cpu.setRegister(3, 0x12345678); // Set R3 to 0x12345678
+    cpu.setRegister(4, 0x9ABCDEF0); // Set R4 to 0x9ABCDEF0
+
+    uint32_t instruction = 0xE0E12392; // Example SMLAL instruction: SMLAL R2, R1, R2, R3
+    executeSMLAL(cpu, instruction);
+
+    // Check if the registers R2 and R1 are set correctly
+    int64_t initial_value = (static_cast<int64_t>(0xFFFFFFFF) << 32) | 0xFFFFFFFE;
+    int64_t multiplication_result = static_cast<int64_t>(static_cast<int32_t>(0xFFFFFFFE)) * static_cast<int64_t>(0x12345678);
+    int64_t expected_result = initial_value + multiplication_result;
+    uint32_t expected_resultLo = static_cast<uint32_t>(expected_result & 0xFFFFFFFF);
+    uint32_t expected_resultHi = static_cast<uint32_t>((expected_result >> 32) & 0xFFFFFFFF);
+
+    if (cpu.getRegister(2) == expected_resultLo && cpu.getRegister(1) == expected_resultHi) {
+        std::cout << "SMLAL instruction test passed." << std::endl;
+    } else {
+        std::cout << "SMLAL instruction test failed." << std::endl;
+        std::cout << "Expected R2: " << std::hex << expected_resultLo << ", Got: " << cpu.getRegister(2) << std::endl;
+        std::cout << "Expected R1: " << std::hex << expected_resultHi << ", Got: " << cpu.getRegister(1) << std::endl;
     }
 }

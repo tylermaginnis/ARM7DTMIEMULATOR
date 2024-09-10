@@ -72,6 +72,7 @@ This will execute a series of predefined tests to ensure the emulator is functio
 - **UMULL**: Unsigned Multiply Long - Multiplies two registers and stores the 64-bit result in two consecutive registers.
 - **UMLAL**: Unsigned Multiply Long Accumulate - Multiplies two registers, adds the result to a third register, and stores the 64-bit result in two consecutive registers.
 - **SMULL**: Signed Multiply Long - Multiplies two registers and stores the 64-bit result in two consecutive registers.
+- **SMLAL**: Signed Multiply Long Accumulate - Multiplies two registers, adds the result to a third register, and stores the 64-bit result in two consecutive registers.
 
 ## MOV Test Cases
 
@@ -297,6 +298,8 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
 | `testUMULL`              | Tests the UMULL instruction                      | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testUMLAL`              | Tests the UMLAL instruction                      | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testSMULL`              | Tests the SMULL instruction                      | <span style="background-color: #90EE90 !important;">Passed</span> |
+| `testSMLAL`              | Tests the SMLAL instruction                      | <span style="background-color: #90EE90 !important;">Passed</span> |
+
 
 
 
@@ -580,6 +583,33 @@ Overall, all the tests for the MOV, MVN, MRS, MSR, and MSRImmediate instructions
     </td>
   </tr>
 </table>
+
+#### SMLAL Instruction Test
+
+<table>
+  <tr>
+    <td>
+      <p align="center">
+        <img src="docs/diagrams/ARITHMETIC/result/SMLAL.svg" alt="SMLAL Instruction Test" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong>Instruction</strong>: `e0e12392`<br>
+      <strong>Condition</strong>: Always (e)<br>
+      <strong>S bit</strong>: 0<br>
+      <strong>Destination Register Low (RdLo)</strong>: 2<br>
+      <strong>Destination Register High (RdHi)</strong>: 1<br>
+      <strong>Source Register (Rm)</strong>: 2<br>
+      <strong>Source Register (Rs)</strong>: 3<br>
+      <strong>Condition Check</strong>: Passed<br>
+      <strong>Register Update</strong>: Register 2 set to `0xDB97530E`, Register 1 set to `0xFFFFFFFF`<br>
+      <strong>Result</strong>: Test passed
+    </td>
+  </tr>
+</table>
+
 
 Overall, all the tests for the ADD and ADC instructions have passed successfully, indicating that the emulator is functioning correctly for these arithmetic instructions.
 
