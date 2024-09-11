@@ -30,15 +30,12 @@ void executeMOV(CPU& cpu, uint32_t instruction) {
     cpu.setRegister(Rd, Oprnd2);
 
     // If S bit is set and Rd is R15 (PC), copy SPSR to CPSR
-    if (S && Rd == 15) {
-        cpu.setCPSR(cpu.getSPSR(), 0xFFFFFFFF);
-        std::cout << "SPSR copied to CPSR" << std::endl;
-    }
-
-    // Update flags if S bit is set and Rd is not R15 (PC)
-    if (S && Rd != 15) {
-        cpu.updateFlags(Oprnd2);
-        std::cout << "Flags updated with " << Oprnd2 << std::endl;
+    if (S) {
+        if (Rd == 15) {
+            cpu.setCPSR(cpu.getSPSR(), 0xFFFFFFFF);
+        } else {     // Update flags if S bit is set and Rd is not R15 (PC)
+            cpu.updateFlags(Oprnd2);
+        }
     }
 
     // Debug print
@@ -69,18 +66,20 @@ void executeMVN(CPU& cpu, uint32_t instruction) {
     uint32_t result = ~Oprnd2;
     cpu.setRegister(Rd, result);
 
-    // Update flags if S bit is set
-    if (S) {
+    // If S bit is set and Rd is R15 (PC), copy SPSR to CPSR
+    if (S && Rd == 15) {
+        cpu.setCPSR(cpu.getSPSR(), 0xFFFFFFFF);
+        std::cout << "SPSR copied to CPSR" << std::endl;
+    }
+
+    // Update flags if S bit is set and Rd is not R15 (PC)
+    if (S && Rd != 15) {
         cpu.updateFlags(result);
+        std::cout << "Flags updated with " << result << std::endl;
     }
 
     // Debug print
     std::cout << "Result: " << result << std::endl;
-
-    // Update flags if S bit is set
-    if (S) {
-        cpu.updateFlags(result);
-    }
 }
 
 void executeMRS(CPU& cpu, uint32_t instruction) {

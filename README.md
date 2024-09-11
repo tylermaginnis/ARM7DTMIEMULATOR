@@ -55,7 +55,7 @@ This will execute a series of predefined tests to ensure the emulator is functio
 ## Glossary of ARM7TDMI Terminology
 
 - **MOV**: Move - Transfers a value from one register to another or loads an immediate value into a register. If the S bit is set and the destination register is R15 (PC), the SPSR is copied to the CPSR. If the S bit is set and the destination register is not R15, the flags are updated with the operand value.
-- **MVN**: Move Not - Transfers the bitwise NOT of an immediate value or a register value into a destination register.
+- **MVN**: Move Not - Transfers the bitwise NOT of an immediate value or a register value into a destination register. If the S bit is set and the destination register is R15 (PC), the SPSR is copied to the CPSR. If the S bit is set and the destination register is not R15, the flags are updated with the result.
 - **MRS**: Move PSR to Register - Transfers the value of the CPSR or SPSR to a general-purpose register.
 - **MSR**: Move Register to PSR - Transfers a value from a general-purpose register to the CPSR or SPSR.
 - **MSRImmediate**: Move Immediate to PSR - Transfers an immediate value to the CPSR or SPSR.
@@ -80,7 +80,7 @@ This will execute a series of predefined tests to ensure the emulator is functio
 
 | Test Case                | Description                                      | Result       |
 |--------------------------|--------------------------------------------------|--------------|
-| `testMOV`                | Tests the MOV instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
+| `testMOV`                | Tests the MOV instruction                        | <span style="background-color: #90EE90 !important;">Fail</span> |
 | `testMVN`                | Tests the MVN instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testMRS`                | Tests the MRS instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testMSR`                | Tests the MSR instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |

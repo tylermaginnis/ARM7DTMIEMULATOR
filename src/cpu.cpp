@@ -305,3 +305,38 @@ void CPU::switchMode(Mode mode) {
 uint32_t CPU::getFlags() const {
     return cpsr & 0xF0000000; // Return only the flag bits (N, Z, C, V)
 }
+
+void CPU::resetCPU() {
+    // Reset all general-purpose registers to 0
+    for (int i = 0; i < 16; ++i) {
+        registers[i] = 0;
+    }
+
+    // Reset CPSR and SPSR to 0
+    cpsr = 0;
+    spsr = 0;
+
+    // Reset all banked registers to 0
+    banked_r8_fiq = 0;
+    banked_r9_fiq = 0;
+    banked_r10_fiq = 0;
+    banked_r11_fiq = 0;
+    banked_r12_fiq = 0;
+    banked_r13_fiq = 0;
+    banked_r14_fiq = 0;
+
+    banked_r13_irq = 0;
+    banked_r14_irq = 0;
+
+    banked_r13_svc = 0;
+    banked_r14_svc = 0;
+
+    banked_r13_abt = 0;
+    banked_r14_abt = 0;
+
+    banked_r13_und = 0;
+    banked_r14_und = 0;
+
+    // Reset the current mode to USER mode
+    currentMode = Mode::USER;
+}

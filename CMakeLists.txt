@@ -5,6 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 include_directories(include)
 
-file(GLOB SOURCES "src/*.cpp" "src/ARM/*.cpp")
+file(GLOB SOURCES "src/*.cpp" "src/ARM/*.cpp" "src/test/*.cpp" "src/test/ARM/*.cpp")
 
 add_executable(ARM7TDMI ${SOURCES})

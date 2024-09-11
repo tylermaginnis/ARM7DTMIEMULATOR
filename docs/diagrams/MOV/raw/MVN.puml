@@ -12,12 +12,16 @@ CPU -> CPU: Evaluate condition
 CPU --> MOV: Condition result
 alt Condition Passed
     MOV -> CPU: setRegister(Rd, ~Oprnd2)
-    alt S bit is set
+    alt S bit is set and Rd is R15
+        MOV -> CPU: setCPSR(cpu.getSPSR(), 0xFFFFFFFF)
+        MOV -> Main: SPSR copied to CPSR
+    else S bit is set and Rd is not R15
         MOV -> CPU: updateFlags(~Oprnd2)
+        MOV -> Main: Flags updated with ~Oprnd2
     end
-    MOV -> Main: Return
+    MOV -> Main: Register Rd set to ~Oprnd2
 else Condition Failed
-    MOV -> Main: Return
+    MOV -> Main: Condition failed, do not execute
 end
 
 @enduml

@@ -44,6 +44,7 @@ enum class Mode {
 
 class CPU {
 public:
+    void resetCPU();
     void setRegister(uint32_t reg, uint32_t value);
     uint32_t getRegister(uint32_t reg);
     uint32_t getSPSR();
