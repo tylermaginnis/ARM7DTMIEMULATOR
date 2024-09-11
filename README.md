@@ -80,7 +80,7 @@ This will execute a series of predefined tests to ensure the emulator is functio
 
 | Test Case                | Description                                      | Result       |
 |--------------------------|--------------------------------------------------|--------------|
-| `testMOV`                | Tests the MOV instruction                        | <span style="background-color: #90EE90 !important;">Fail</span> |
+| `testMOV`                | Tests the MOV instruction                        | <span style="background-color: #90EE90 !important;">Fail (2/4)</span> |
 | `testMVN`                | Tests the MVN instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testMRS`                | Tests the MRS instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
 | `testMSR`                | Tests the MSR instruction                        | <span style="background-color: #90EE90 !important;">Passed</span> |
