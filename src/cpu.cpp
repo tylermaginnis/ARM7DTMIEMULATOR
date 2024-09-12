@@ -1,6 +1,22 @@
 #include "cpu.h"
+#include "../include/instructions/ARM/ARMinstruction.h"
+#include "../include/instructions/ARM/MOV/MOVinstruction.h"
 #include <iostream>
 #include <string>
+
+void CPU::executeInstruction(uint32_t instruction) {
+    uint32_t opcode = (instruction >> 21) & 0xF;
+
+    ARMInstruction* instr = nullptr;
+    switch (opcode) {
+        case 0xD: instr = new MOVInstruction(); 
+    }
+
+    if (instr) {
+        instr->execute(*this, instruction);
+        delete instr;
+    }
+}
 
 void CPU::setRegister(uint32_t reg, uint32_t value) {
     std::cout << "setRegister called with reg: " << reg << ", value: " << std::hex << value << std::endl;

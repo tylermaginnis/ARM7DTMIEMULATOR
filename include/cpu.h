@@ -4,6 +4,7 @@
 #include <cstdint>
 #include "ARM/arm_instructions_MOV.h"
 #include "ARM/arm_instructions_ARITHMETIC.h"
+#include "instructions/ARM/ARMinstruction.h"
 
 enum class Field {
     CONTROL,
@@ -60,6 +61,8 @@ public:
     void setSPSRFlags(uint32_t value);
     void switchMode(Mode mode);
     uint32_t getFlags() const;
+
+    void executeInstruction(uint32_t instruction);
 
 
 private:
