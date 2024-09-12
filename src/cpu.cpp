@@ -52,7 +52,7 @@ void CPU::setRegister(uint32_t reg, uint32_t value) {
     std::cout << "Register " << reg << " set to " << std::hex << value << std::endl;
 }
 
-uint32_t CPU::getRegister(uint32_t reg) {
+uint32_t CPU::getRegister(uint32_t reg) const {
     std::cout << "getRegister called with reg: " << reg << std::endl;
     if (reg < 16) {
         if (reg == 13) { // SP

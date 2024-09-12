@@ -47,7 +47,7 @@ class CPU {
 public:
     void resetCPU();
     void setRegister(uint32_t reg, uint32_t value);
-    uint32_t getRegister(uint32_t reg);
+    uint32_t getRegister(uint32_t reg) const; // Ensure this matches the definition
     uint32_t getSPSR();
     uint32_t getCPSR();
     void setSPSR(uint32_t field, uint32_t value);
