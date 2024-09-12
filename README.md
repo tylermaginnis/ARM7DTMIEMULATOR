@@ -47,14 +47,9 @@ This will execute a series of predefined tests to ensure the emulator is functio
 ## Code Structure
 
 - `src/main.cpp`: Contains the main function and test functions.
-- `src/ARM/ARM_instructions_MOV.cpp`: Implements the MOV, MVN, MRS, MSR, and MSRImmediate instructions.
+- `src/cpu.cpp`: Implements the CPU class and its methods.
 - `src/instructions/ARM/ARMinstruction.cpp`: Base class for ARM instructions.
 - `src/instructions/ARM/MOV/MOVinstruction.cpp`: Implements the MOV instruction.
-- `src/cpu.cpp`: Implements the CPU class and its methods.
-- `include/ARM/arm_instructions_MOV.h`: Header file for ARM instruction implementations.
-- `include/instructions/ARM/ARMinstruction.h`: Header file for the base ARM instruction class.
-- `include/instructions/ARM/MOV/MOVinstruction.h`: Header file for the MOV instruction class.
-- `include/cpu.h`: Header file for the CPU class.
 
 ## Glossary of ARM7TDMI Terminology
 
