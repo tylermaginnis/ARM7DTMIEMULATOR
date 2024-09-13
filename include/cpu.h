@@ -5,6 +5,7 @@
 #include "ARM/arm_instructions_MOV.h"
 #include "ARM/arm_instructions_ARITHMETIC.h"
 #include "instructions/ARM/ARMinstruction.h"
+#include "memory.h" // Include the Memory class
 
 enum class Field {
     CONTROL,
@@ -61,9 +62,12 @@ public:
     void setSPSRFlags(uint32_t value);
     void switchMode(Mode mode);
     uint32_t getFlags() const;
+    void load(uint32_t address, uint32_t reg);
+    void store(uint32_t address, uint32_t reg);
+
+
 
     void executeInstruction(uint32_t instruction);
-
 
 private:
     uint32_t registers[16]; // R0-R15
@@ -91,9 +95,8 @@ private:
     uint32_t banked_r13_und;
     uint32_t banked_r14_und;
 
-    
-
     Mode currentMode;
+    Memory memory; // Add Memory as a member of CPU
 };
 
 #endif // CPU_H

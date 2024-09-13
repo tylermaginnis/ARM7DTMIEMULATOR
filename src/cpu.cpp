@@ -1,4 +1,5 @@
 #include "cpu.h"
+#include "../include/memory.h" // Include Memory
 #include "../include/instructions/ARM/ARMinstruction.h"
 #include "../include/instructions/ARM/MOV/MOVinstruction.h"
 #include <iostream>
@@ -10,12 +11,30 @@ void CPU::executeInstruction(uint32_t instruction) {
     ARMInstruction* instr = nullptr;
     switch (opcode) {
         case 0xD: instr = new MOVInstruction(); 
+           // Add cases for load/store opcodes
+           // e.g.,
+           // case 0x1: // LDR
+           //     // Implement Load instruction
+           //     break;
+           // case 0x2: // STR
+           //     // Implement Store instruction
+           //     break;
     }
 
     if (instr) {
         instr->execute(*this, instruction);
         delete instr;
     }
+}
+
+void CPU::load(uint32_t address, uint32_t reg) {
+    uint32_t value = memory.read(address);
+    setRegister(reg, value);
+}
+
+void CPU::store(uint32_t address, uint32_t reg) {
+    uint32_t value = getRegister(reg);
+    memory.write(address, value);
 }
 
 void CPU::setRegister(uint32_t reg, uint32_t value) {
@@ -356,3 +375,4 @@ void CPU::resetCPU() {
     // Reset the current mode to USER mode
     currentMode = Mode::USER;
 }
+
